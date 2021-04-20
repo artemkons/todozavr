@@ -1,4 +1,4 @@
-const { buildSchema } = require("graphql");
+import { buildSchema } from "graphql";
 
 var schema = buildSchema(`
   type Todo {
@@ -19,4 +19,4 @@ var schema = buildSchema(`
   }
 `);
 
-module.exports = schema;
+export default schema;

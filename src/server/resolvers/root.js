@@ -1,4 +1,4 @@
-const Todos = require("../models/todo");
+import Todos from "../models/todo";
 
 var root = {
   allTodos: async () => {
@@ -19,4 +19,4 @@ var root = {
   },
 };
 
-module.exports = root;
+export default root;
