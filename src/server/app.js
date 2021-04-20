@@ -1,6 +1,6 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 import schema from "./schema/schema";
 import root from "./resolvers/root";
 

@@ -5,8 +5,8 @@ module.exports = {
   mode: "development",
   entry: "./src/server/app.js",
   output: {
-    filename: "backend.js",
     path: path.resolve(__dirname, "dist"),
+    filename: "backend.js",
   },
   devServer: {
     contentBase: "./dist",
@@ -20,6 +20,14 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env"],
+            plugins: [
+              [
+                "@babel/plugin-transform-runtime",
+                {
+                  regenerator: true,
+                },
+              ],
+            ],
           },
         },
       },
