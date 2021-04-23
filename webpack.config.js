@@ -1,6 +1,7 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = [
   {
@@ -53,12 +54,15 @@ module.exports = [
     name: "client",
     mode: "development",
     entry: "./src/client",
+    devtool: "source-map",
     devServer: {
       contentBase: "./dist/client",
+      historyApiFallback: true,
     },
     output: {
       filename: "client/frontend.js",
       path: path.resolve(__dirname, "dist"),
+      assetModuleFilename: "client/[hash][ext][query]",
     },
     module: {
       rules: [
@@ -71,6 +75,36 @@ module.exports = [
               presets: ["@babel/preset-env", "@babel/preset-react"],
             },
           },
+        },
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/i,
+          type: "asset/resource",
+        },
+        {
+          test: /\.(png|jpg|gif)$/i,
+          use: [
+            {
+              loader: "url-loader",
+              options: {
+                limit: 8192,
+              },
+            },
+          ],
+        },
+        {
+          test: /\.svg$/i,
+          use: [
+            {
+              loader: "url-loader",
+              options: {
+                encoding: false,
+              },
+            },
+          ],
         },
       ],
     },
