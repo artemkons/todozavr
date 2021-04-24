@@ -5,41 +5,16 @@
 
 @font-face {
   font-family: "Montserrat";
-  src: url("./Montserrat-Medium.ttf");
-
-  font-style: normal;
-  font-weight: 500;
+  src: url("./montserrat-v15-latin-500.woff2");
 }
 
-@font-face {
-  font-family: "Montserrat";
-  src: url("./Montserrat-Light.ttf");
-
-  font-style: normal;
-  font-weight: 300;
-}
-
-@media (max-width: 320px) {
-  html {
-    font-size: 12px;
-  }
-}
-@media (min-width: 320ox) {
-  html {
-    font-size: 16px;
-  }
-}
-
-body {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 300;
+html {
+  font-size: 16px;
 }
 
 .wrapper {
   max-width: 1400px;
   margin: 0 auto;
-  padding-top: 5px;
   width: 80%;
 }
 
@@ -48,47 +23,31 @@ body {
 }
 
 .todo-item {
-  width: 80%;
-  color: black;
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-  border: 1px solid #fff;
-  padding: 5px;
-}
-
-.todo-item:hover {
-  border: 1px solid #94d4d8;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn {
-  background-color: #fff;
-  border: 1px solid #bcbcbc;
-  border-radius: 5px;
-  padding: 3px;
-  text-decoration: none;
-  color: black;
-}
-.btn:hover {
-  cursor: pointer;
-  border: 1px solid #94d4d8;
-  border-radius: 5px;
 }
 
 .back-btn {
-  /* background-image: url("./back-arrow.svg");   хз почему нне работает*/
+  background-color: #fff;
+  border-width: 1.25px;
+  border-radius: 3px;
+  width: 14px;
+  height: 14px;
+  background-image: url("./back-arrow.svg");
 }
 
 .title {
   font-size: 1.25rem;
+  font-family: "Montserrat";
   font-weight: 500;
 }
 
 .text {
   font-size: 1rem;
+  font-family: "Montserrat";
+  font-weight: 300;
 }
 
 .checkbox {
@@ -96,46 +55,4 @@ body {
   width: 15px;
   height: 15px;
   cursor: pointer;
-  border: 1px solid #94d4d8;
-}
-
-@media (min-width: 600px) {
-  .todoEditor-container {
-    margin: 0 auto;
-    width: 80%;
-    max-width: 600px;
-  }
-}
-
-.todoEditor-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.todoEditor-container > * {
-  margin-bottom: 10px;
-}
-
-.todo-title {
-  height: 25px;
-}
-.todo-text {
-  height: 100px;
-}
-
-.form-input {
-  width: 100%;
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 300;
-  font-size: 1rem;
-  border: 1px solid #bcbcbc;
-  border-radius: 5px;
-}
-
-.form-input:focus {
-  border: 1px solid #94d4d8;
-  border-radius: 5px;
-  outline: none;
 }
