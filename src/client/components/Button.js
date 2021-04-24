@@ -1,7 +1,8 @@
 import React from "react";
 
 const Button = () => {
-  return <button>Сохранить</button>;
+  // сделать там один класс для кнопок типа btn btn back и тд и тп
+  return <div className="btn">Сохранить</div>;
 };
 
 export default Button;
