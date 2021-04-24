@@ -139,3 +139,7 @@ body {
   border-radius: 5px;
   outline: none;
 }
+
+.link {
+  text-decoration: none;
+}

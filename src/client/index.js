@@ -7,21 +7,19 @@ import TitleField from "./components/TitleField";
 import TextField from "./components/TextField";
 import Button from "./components/Button";
 import TodoList from "./components/TodoList";
+import TodoEditor from "./components/TodoEditor";
 
 render(
   <Router>
     <Switch>
       <Route exact path="/">
         <div className="wrapper">
-          <button className="back-btn"></button>
           <TodoList />
         </div>
       </Route>
       <Route exact path="/item">
         <div className="wrapper">
-          <TitleField />
-          <TextField />
-          <Button />
+          <TodoEditor />
         </div>
       </Route>
     </Switch>

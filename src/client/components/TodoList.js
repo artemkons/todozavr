@@ -1,16 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 let testTodos = ["sosi", "ebi", "pls"];
 
 const TodoItem = ({ title }) => {
   return (
-    <div className="todo-item">
-      <input type="checkbox" className="checkbox"></input>
-      <div className="text-container">
-        <h3 className="title">{title}</h3>
-        <p className="text">Текст - не больше 255 знаков</p>
+    <Link to="/item" className="link">
+      <div className="todo-item">
+        <input type="checkbox" className="checkbox"></input>
+        <div className="text-container">
+          <h3 className="title">{title}</h3>
+          <p className="text">Текст - не больше 255 знаков</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
