@@ -6,13 +6,15 @@ import Button from "./Button";
 
 const TodoEditor = () => {
   return (
-    <div className="todoEditor-container">
-      <Link to="/" className="btn">
-        Назад
-      </Link>
-      <TitleField />
-      <TextField />
-      <Button />
+    <div className="wrapper">
+      <div className="todoEditor-container">
+        <Link to="/" className="btn">
+          Назад
+        </Link>
+        <TitleField />
+        <TextField />
+        <Button />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,28 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./client/src/styles/Montserrat-Light.ttf":
+/*!************************************************!*\
+  !*** ./client/src/styles/Montserrat-Light.ttf ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "02afb26fe72fcc052988.ttf";
+
+/***/ }),
+
+/***/ "./client/src/styles/Montserrat-Medium.ttf":
+/*!*************************************************!*\
+  !*** ./client/src/styles/Montserrat-Medium.ttf ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "e2d60bc49517598c0ce8.ttf";
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
 /*!************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
@@ -103,9 +125,9 @@ function _setPrototypeOf(o, p) {
 
 /***/ }),
 
-/***/ "./src/client/components/Button.js":
+/***/ "./client/src/components/Button.js":
 /*!*****************************************!*\
-  !*** ./src/client/components/Button.js ***!
+  !*** ./client/src/components/Button.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -118,16 +140,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Button = function Button() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "btn"
+  }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
 /***/ }),
 
-/***/ "./src/client/components/TextField.js":
+/***/ "./client/src/components/TextField.js":
 /*!********************************************!*\
-  !*** ./src/client/components/TextField.js ***!
+  !*** ./client/src/components/TextField.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -137,22 +161,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var TextField = function TextField() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", _defineProperty({
     className: "text",
     value: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435!"
-  });
+  }, "className", "form-input todo-text"));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TextField);
 
 /***/ }),
 
-/***/ "./src/client/components/TitleField.js":
+/***/ "./client/src/components/TitleField.js":
 /*!*********************************************!*\
-  !*** ./src/client/components/TitleField.js ***!
+  !*** ./client/src/components/TitleField.js ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -167,7 +193,8 @@ __webpack_require__.r(__webpack_exports__);
 var TitleField = function TitleField() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     type: "text",
-    placeholder: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0437\u0430\u0434\u0430\u0447\u0443 \u0441\u044E\u0434\u0430!"
+    placeholder: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0437\u0430\u0434\u0430\u0447\u0443 \u0441\u044E\u0434\u0430!",
+    className: "form-input todo-title"
   });
 };
 
@@ -175,9 +202,46 @@ var TitleField = function TitleField() {
 
 /***/ }),
 
-/***/ "./src/client/components/TodoList.js":
+/***/ "./client/src/components/TodoEditor.js":
+/*!*********************************************!*\
+  !*** ./client/src/components/TodoEditor.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _TitleField__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TitleField */ "./client/src/components/TitleField.js");
+/* harmony import */ var _TextField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TextField */ "./client/src/components/TextField.js");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./client/src/components/Button.js");
+
+
+
+
+
+
+var TodoEditor = function TodoEditor() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "todoEditor-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    to: "/",
+    className: "btn"
+  }, "\u041D\u0430\u0437\u0430\u0434"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_TitleField__WEBPACK_IMPORTED_MODULE_1__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_TextField__WEBPACK_IMPORTED_MODULE_2__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Button__WEBPACK_IMPORTED_MODULE_3__.default, null)));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TodoEditor);
+
+/***/ }),
+
+/***/ "./client/src/components/TodoList.js":
 /*!*******************************************!*\
-  !*** ./src/client/components/TodoList.js ***!
+  !*** ./client/src/components/TodoList.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -187,23 +251,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
+
+var testTodos = ["sosi", "ebi", "pls"];
+
+var TodoItem = function TodoItem(_ref) {
+  var title = _ref.title;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "/item",
+    className: "link"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "todo-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "checkbox",
+    className: "checkbox"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "text-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
+    className: "title"
+  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    className: "text"
+  }, "\u0422\u0435\u043A\u0441\u0442 - \u043D\u0435 \u0431\u043E\u043B\u044C\u0448\u0435 255 \u0437\u043D\u0430\u043A\u043E\u0432"))));
+};
 
 var TodoList = function TodoList() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "todolist-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
-    className: "title"
-  }, "Todo Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "\u0422\u0435\u043A\u0441\u0442 - \u043D\u0435 \u0431\u043E\u043B\u044C\u0448\u0435 255 \u0437\u043D\u0430\u043A\u043E\u0432"));
+    className: "wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "todo-list"
+  }, testTodos.map(function (e) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(TodoItem, {
+      title: e
+    });
+  })));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TodoList);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/client/styles/index.css":
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/styles/index.css":
 /*!***************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/client/styles/index.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/styles/index.css ***!
   \***************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -218,16 +308,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Montserrat_Black_ttf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Montserrat-Black.ttf */ "./src/client/styles/Montserrat-Black.ttf");
+/* harmony import */ var _Montserrat_Medium_ttf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Montserrat-Medium.ttf */ "./client/src/styles/Montserrat-Medium.ttf");
+/* harmony import */ var _Montserrat_Light_ttf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Montserrat-Light.ttf */ "./client/src/styles/Montserrat-Light.ttf");
 // Imports
 
 
 
 
+
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
-var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(_Montserrat_Black_ttf__WEBPACK_IMPORTED_MODULE_3__);
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(_Montserrat_Medium_ttf__WEBPACK_IMPORTED_MODULE_3__);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(_Montserrat_Light_ttf__WEBPACK_IMPORTED_MODULE_4__);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@font-face {\n  font-family: \"Montserrat\";\n  src: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") format(\"ttf\");\n}\n\nhtml {\n  font-size: 16px;\n}\n\n.wrapper {\n  display: flex;\n  flex-direction: column;\n}\n\n.todolist-container {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.back-btn {\n  width: 10%;\n}\n\n.title {\n  font-size: 1.5rem;\n  font-family: \"Montserrat\", sans-serif;\n}\n", "",{"version":3,"sources":["webpack://./src/client/styles/index.css"],"names":[],"mappings":"AAAA;EACE,yBAAyB;EACzB,0DAAgD;AAClD;;AAEA;EACE,eAAe;AACjB;;AAEA;EACE,aAAa;EACb,sBAAsB;AACxB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,UAAU;AACZ;;AAEA;EACE,iBAAiB;EACjB,qCAAqC;AACvC","sourcesContent":["@font-face {\n  font-family: \"Montserrat\";\n  src: url(\"./Montserrat-Black.ttf\") format(\"ttf\");\n}\n\nhtml {\n  font-size: 16px;\n}\n\n.wrapper {\n  display: flex;\n  flex-direction: column;\n}\n\n.todolist-container {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.back-btn {\n  width: 10%;\n}\n\n.title {\n  font-size: 1.5rem;\n  font-family: \"Montserrat\", sans-serif;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n}\n\n@font-face {\n  font-family: \"Montserrat\";\n  src: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n\n  font-style: normal;\n  font-weight: 500;\n}\n\n@font-face {\n  font-family: \"Montserrat\";\n  src: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n\n  font-style: normal;\n  font-weight: 300;\n}\n\n@media (max-width: 320px) {\n  html {\n    font-size: 12px;\n  }\n}\n@media (min-width: 320ox) {\n  html {\n    font-size: 16px;\n  }\n}\n\nbody {\n  font-family: \"Montserrat\";\n  font-style: normal;\n  font-weight: 300;\n}\n\n.wrapper {\n  max-width: 1400px;\n  margin: 0 auto;\n  padding-top: 5px;\n  width: 80%;\n}\n\n.todo-list {\n  width: 80%;\n}\n\n.todo-item {\n  width: 80%;\n  color: black;\n  display: flex;\n  flex-wrap: nowrap;\n  justify-content: flex-start;\n  align-items: center;\n  border: 1px solid #fff;\n  padding: 5px;\n}\n\n.todo-item:hover {\n  border: 1px solid #94d4d8;\n  border-radius: 5px;\n  cursor: pointer;\n}\n\n.btn {\n  background-color: #fff;\n  border: 1px solid #bcbcbc;\n  border-radius: 5px;\n  padding: 3px;\n  text-decoration: none;\n  color: black;\n}\n.btn:hover {\n  cursor: pointer;\n  border: 1px solid #94d4d8;\n  border-radius: 5px;\n}\n\n.title {\n  font-size: 1.25rem;\n  font-weight: 500;\n}\n\n.text {\n  font-size: 1rem;\n}\n\n.checkbox {\n  margin-right: 10px;\n  width: 15px;\n  height: 15px;\n  cursor: pointer;\n  border: 1px solid #94d4d8;\n}\n\n@media (min-width: 600px) {\n  .todoEditor-container {\n    margin: 0 auto;\n    width: 80%;\n    max-width: 600px;\n  }\n}\n\n.todoEditor-container {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.todoEditor-container > * {\n  margin-bottom: 10px;\n}\n\n.todo-title {\n  height: 25px;\n}\n.todo-text {\n  height: 100px;\n}\n\n.form-input {\n  width: 100%;\n  font-family: \"Montserrat\";\n  font-style: normal;\n  font-weight: 300;\n  font-size: 1rem;\n  border: 1px solid #bcbcbc;\n  border-radius: 5px;\n}\n\n.form-input:focus {\n  border: 1px solid #94d4d8;\n  border-radius: 5px;\n  outline: none;\n}\n\n.link {\n  text-decoration: none;\n}\n", "",{"version":3,"sources":["webpack://./client/src/styles/index.css"],"names":[],"mappings":"AAAA;EACE,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,yBAAyB;EACzB,4CAAmC;;EAEnC,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE,yBAAyB;EACzB,4CAAkC;;EAElC,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE;IACE,eAAe;EACjB;AACF;AACA;EACE;IACE,eAAe;EACjB;AACF;;AAEA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE,iBAAiB;EACjB,cAAc;EACd,gBAAgB;EAChB,UAAU;AACZ;;AAEA;EACE,UAAU;AACZ;;AAEA;EACE,UAAU;EACV,YAAY;EACZ,aAAa;EACb,iBAAiB;EACjB,2BAA2B;EAC3B,mBAAmB;EACnB,sBAAsB;EACtB,YAAY;AACd;;AAEA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,eAAe;AACjB;;AAEA;EACE,sBAAsB;EACtB,yBAAyB;EACzB,kBAAkB;EAClB,YAAY;EACZ,qBAAqB;EACrB,YAAY;AACd;AACA;EACE,eAAe;EACf,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE,eAAe;AACjB;;AAEA;EACE,kBAAkB;EAClB,WAAW;EACX,YAAY;EACZ,eAAe;EACf,yBAAyB;AAC3B;;AAEA;EACE;IACE,cAAc;IACd,UAAU;IACV,gBAAgB;EAClB;AACF;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,YAAY;AACd;AACA;EACE,aAAa;AACf;;AAEA;EACE,WAAW;EACX,yBAAyB;EACzB,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;AACf;;AAEA;EACE,qBAAqB;AACvB","sourcesContent":["* {\n  margin: 0;\n  padding: 0;\n}\n\n@font-face {\n  font-family: \"Montserrat\";\n  src: url(\"./Montserrat-Medium.ttf\");\n\n  font-style: normal;\n  font-weight: 500;\n}\n\n@font-face {\n  font-family: \"Montserrat\";\n  src: url(\"./Montserrat-Light.ttf\");\n\n  font-style: normal;\n  font-weight: 300;\n}\n\n@media (max-width: 320px) {\n  html {\n    font-size: 12px;\n  }\n}\n@media (min-width: 320ox) {\n  html {\n    font-size: 16px;\n  }\n}\n\nbody {\n  font-family: \"Montserrat\";\n  font-style: normal;\n  font-weight: 300;\n}\n\n.wrapper {\n  max-width: 1400px;\n  margin: 0 auto;\n  padding-top: 5px;\n  width: 80%;\n}\n\n.todo-list {\n  width: 80%;\n}\n\n.todo-item {\n  width: 80%;\n  color: black;\n  display: flex;\n  flex-wrap: nowrap;\n  justify-content: flex-start;\n  align-items: center;\n  border: 1px solid #fff;\n  padding: 5px;\n}\n\n.todo-item:hover {\n  border: 1px solid #94d4d8;\n  border-radius: 5px;\n  cursor: pointer;\n}\n\n.btn {\n  background-color: #fff;\n  border: 1px solid #bcbcbc;\n  border-radius: 5px;\n  padding: 3px;\n  text-decoration: none;\n  color: black;\n}\n.btn:hover {\n  cursor: pointer;\n  border: 1px solid #94d4d8;\n  border-radius: 5px;\n}\n\n.title {\n  font-size: 1.25rem;\n  font-weight: 500;\n}\n\n.text {\n  font-size: 1rem;\n}\n\n.checkbox {\n  margin-right: 10px;\n  width: 15px;\n  height: 15px;\n  cursor: pointer;\n  border: 1px solid #94d4d8;\n}\n\n@media (min-width: 600px) {\n  .todoEditor-container {\n    margin: 0 auto;\n    width: 80%;\n    max-width: 600px;\n  }\n}\n\n.todoEditor-container {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.todoEditor-container > * {\n  margin-bottom: 10px;\n}\n\n.todo-title {\n  height: 25px;\n}\n.todo-text {\n  height: 100px;\n}\n\n.form-input {\n  width: 100%;\n  font-family: \"Montserrat\";\n  font-style: normal;\n  font-weight: 300;\n  font-size: 1rem;\n  border: 1px solid #bcbcbc;\n  border-radius: 5px;\n}\n\n.form-input:focus {\n  border: 1px solid #94d4d8;\n  border-radius: 5px;\n  outline: none;\n}\n\n.link {\n  text-decoration: none;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34155,9 +34248,9 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./src/client/styles/index.css":
+/***/ "./client/src/styles/index.css":
 /*!*************************************!*\
-  !*** ./src/client/styles/index.css ***!
+  !*** ./client/src/styles/index.css ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -34168,7 +34261,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!./index.css */ "./node_modules/css-loader/dist/cjs.js!./src/client/styles/index.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!./index.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/styles/index.css");
 
             
 
@@ -34576,17 +34669,6 @@ function valueEqual(a, b) {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (valueEqual);
 
 
-/***/ }),
-
-/***/ "./src/client/styles/Montserrat-Black.ttf":
-/*!************************************************!*\
-  !*** ./src/client/styles/Montserrat-Black.ttf ***!
-  \************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-module.exports = __webpack_require__.p + "client/46e8b3d6aad654578958.ttf";
-
 /***/ })
 
 /******/ 	});
@@ -34685,7 +34767,7 @@ module.exports = __webpack_require__.p + "client/46e8b3d6aad654578958.ttf";
 /******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
 /******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
 /******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl + "../";
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
@@ -34694,41 +34776,31 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 /*!*****************************!*\
-  !*** ./src/client/index.js ***!
+  !*** ./client/src/index.js ***!
   \*****************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/index.css */ "./src/client/styles/index.css");
-/* harmony import */ var _components_TitleField__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TitleField */ "./src/client/components/TitleField.js");
-/* harmony import */ var _components_TextField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TextField */ "./src/client/components/TextField.js");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Button */ "./src/client/components/Button.js");
-/* harmony import */ var _components_TodoList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/TodoList */ "./src/client/components/TodoList.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/index.css */ "./client/src/styles/index.css");
+/* harmony import */ var _components_TodoList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TodoList */ "./client/src/components/TodoList.js");
+/* harmony import */ var _components_TodoEditor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TodoEditor */ "./client/src/components/TodoEditor.js");
 
 
 
 
 
 
-
-
-(0,react_dom__WEBPACK_IMPORTED_MODULE_1__.render)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+(0,react_dom__WEBPACK_IMPORTED_MODULE_1__.render)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
   exact: true,
   path: "/"
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-  className: "wrapper"
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-  className: "back-btn"
-}, "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_TodoList__WEBPACK_IMPORTED_MODULE_6__.default, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_TodoList__WEBPACK_IMPORTED_MODULE_3__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
   exact: true,
   path: "/item"
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-  className: "wrapper"
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_TitleField__WEBPACK_IMPORTED_MODULE_3__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_TextField__WEBPACK_IMPORTED_MODULE_4__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__.default, null))))), document.getElementById("root"));
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_TodoEditor__WEBPACK_IMPORTED_MODULE_4__.default, null)))), document.getElementById("root"));
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=frontend.js.map
+//# sourceMappingURL=bundle.js.map

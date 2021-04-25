@@ -7,10 +7,10 @@ module.exports = [
   {
     name: "server",
     mode: "development",
-    entry: "./src/server/app.js",
+    entry: "./server/src/app.js",
     output: {
-      path: path.resolve(__dirname, "dist"),
-      filename: "server/backend.js",
+      path: path.resolve(__dirname, "server/public"),
+      filename: "backend.js",
     },
     module: {
       rules: [
@@ -53,16 +53,16 @@ module.exports = [
   {
     name: "client",
     mode: "development",
-    entry: "./src/client",
+    entry: "./client/src",
     devtool: "source-map",
     devServer: {
-      contentBase: "./dist/client",
+      contentBase: "./client/public",
       historyApiFallback: true,
     },
     output: {
-      filename: "client/frontend.js",
-      path: path.resolve(__dirname, "dist"),
-      assetModuleFilename: "client/[hash][ext][query]",
+      path: path.resolve(__dirname, "client/public"),
+      filename: "bundle.js",
+      assetModuleFilename: "[hash][ext][query]",
     },
     module: {
       rules: [
@@ -110,8 +110,8 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "./src/client/index.html",
-        filename: "client/index.html",
+        template: "./client/src/index.html",
+        filename: "index.html",
       }),
     ],
   },

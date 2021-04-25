@@ -19,10 +19,12 @@ const TodoItem = ({ title }) => {
 
 const TodoList = () => {
   return (
-    <div className="todo-list">
-      {testTodos.map((e) => (
-        <TodoItem title={e} />
-      ))}
+    <div className="wrapper">
+      <div className="todo-list">
+        {testTodos.map((e) => (
+          <TodoItem title={e} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import mongoose from "mongoose";
+import path from "path";
+import appRoot from "app-root-path";
 import schema from "./schema/schema";
 import root from "./resolvers/root";
 
@@ -19,9 +21,7 @@ dbConnection.once("open", () => console.log("Connected to DB!"));
 const app = express();
 const PORT = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/", express.static("client/public"));
 
 app.use(
   "/api",

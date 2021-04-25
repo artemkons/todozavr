@@ -78,10 +78,6 @@ body {
   border-radius: 5px;
 }
 
-.back-btn {
-  /* background-image: url("./back-arrow.svg");   хз почему нне работает*/
-}
-
 .title {
   font-size: 1.25rem;
   font-weight: 500;
