@@ -125,10 +125,10 @@ function _setPrototypeOf(o, p) {
 
 /***/ }),
 
-/***/ "./client/src/components/Button.js":
-/*!*****************************************!*\
-  !*** ./client/src/components/Button.js ***!
-  \*****************************************/
+/***/ "./client/src/components/TodoEditor/Button.js":
+/*!****************************************************!*\
+  !*** ./client/src/components/TodoEditor/Button.js ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -149,10 +149,10 @@ var Button = function Button() {
 
 /***/ }),
 
-/***/ "./client/src/components/TextField.js":
-/*!********************************************!*\
-  !*** ./client/src/components/TextField.js ***!
-  \********************************************/
+/***/ "./client/src/components/TodoEditor/TextField.js":
+/*!*******************************************************!*\
+  !*** ./client/src/components/TodoEditor/TextField.js ***!
+  \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -176,10 +176,10 @@ var TextField = function TextField() {
 
 /***/ }),
 
-/***/ "./client/src/components/TitleField.js":
-/*!*********************************************!*\
-  !*** ./client/src/components/TitleField.js ***!
-  \*********************************************/
+/***/ "./client/src/components/TodoEditor/TitleField.js":
+/*!********************************************************!*\
+  !*** ./client/src/components/TodoEditor/TitleField.js ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -202,10 +202,10 @@ var TitleField = function TitleField() {
 
 /***/ }),
 
-/***/ "./client/src/components/TodoEditor.js":
-/*!*********************************************!*\
-  !*** ./client/src/components/TodoEditor.js ***!
-  \*********************************************/
+/***/ "./client/src/components/TodoEditor/index.js":
+/*!***************************************************!*\
+  !*** ./client/src/components/TodoEditor/index.js ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -215,9 +215,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _TitleField__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TitleField */ "./client/src/components/TitleField.js");
-/* harmony import */ var _TextField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TextField */ "./client/src/components/TextField.js");
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./client/src/components/Button.js");
+/* harmony import */ var _TitleField__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TitleField */ "./client/src/components/TodoEditor/TitleField.js");
+/* harmony import */ var _TextField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TextField */ "./client/src/components/TodoEditor/TextField.js");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./client/src/components/TodoEditor/Button.js");
 
 
 
@@ -239,10 +239,10 @@ var TodoEditor = function TodoEditor() {
 
 /***/ }),
 
-/***/ "./client/src/components/TodoList.js":
-/*!*******************************************!*\
-  !*** ./client/src/components/TodoList.js ***!
-  \*******************************************/
+/***/ "./client/src/components/TodoList/index.js":
+/*!*************************************************!*\
+  !*** ./client/src/components/TodoList/index.js ***!
+  \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34784,8 +34784,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/index.css */ "./client/src/styles/index.css");
-/* harmony import */ var _components_TodoList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TodoList */ "./client/src/components/TodoList.js");
-/* harmony import */ var _components_TodoEditor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TodoEditor */ "./client/src/components/TodoEditor.js");
+/* harmony import */ var _components_TodoList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TodoList */ "./client/src/components/TodoList/index.js");
+/* harmony import */ var _components_TodoEditor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TodoEditor */ "./client/src/components/TodoEditor/index.js");
 
 
 
