@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-let testTodos = ["sosi", "ebi", "pls"];
+let query = `
+query {
+  allTodos {
+    title
+    text
+  }
+}
+`;
 
 const TodoItem = ({ title }) => {
   return (
@@ -18,13 +25,29 @@ const TodoItem = ({ title }) => {
 };
 
 const TodoList = () => {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(async () => {
+    let response = await fetch("/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query: query }),
+    });
+
+    let result = await response.json();
+    setTodos((prev) => [...prev, result.data.allTodos]);
+  }, []);
+
   return (
     <div className="wrapper">
       <div className="todo-list">
-        {testTodos.map((e) => (
-          <TodoItem title={e} />
-        ))}
+        {[] || todos.map((e) => <TodoItem title={e} />)}
       </div>
+      <Link to="item/new" className="btn">
+        Добавить
+      </Link>
     </div>
   );
 };

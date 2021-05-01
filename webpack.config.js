@@ -1,7 +1,6 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = [
   {
@@ -57,7 +56,6 @@ module.exports = [
     devtool: "source-map",
     devServer: {
       contentBase: "./client/public",
-      historyApiFallback: true,
     },
     output: {
       path: path.resolve(__dirname, "client/public"),
@@ -73,6 +71,14 @@ module.exports = [
             loader: "babel-loader",
             options: {
               presets: ["@babel/preset-env", "@babel/preset-react"],
+              plugins: [
+                [
+                  "@babel/plugin-transform-runtime",
+                  {
+                    regenerator: true,
+                  },
+                ],
+              ],
             },
           },
         },

@@ -1,7 +1,15 @@
 import React from "react";
 
-const TitleField = () => {
-  return <input type="text" placeholder="Введите задачу сюда!" className="form-input todo-title"></input>;
+const TitleField = ({ name, onChange, value }) => {
+  return (
+    <input
+      name={name}
+      type="text"
+      onChange={onChange}
+      value={value}
+      className="form-input todo-title"
+    ></input>
+  );
 };
 
 export default TitleField;

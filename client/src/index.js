@@ -11,7 +11,7 @@ render(
       <Route exact path="/">
         <TodoList />
       </Route>
-      <Route exact path="/item">
+      <Route path="/item/:id">
         <TodoEditor />
       </Route>
     </Switch>

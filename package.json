@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon server/public/backend.js",
-    "client": "webpack --watch --config-name client",
+    "client": "webpack serve --open",
+    "server": "node server/public/backend.js",
+    "start": "npm run build-client && npm run server",
     "build-server": "webpack --config-name server",
     "build-client": "webpack --config-name client",
-    "dev": "concurrently \"npm:client\" \"npm:server\""
+    "dev-server": "nodemon server/public/backend.js",
+    "test": "webpack --config-name client"
   },
   "author": "",
   "license": "ISC",

@@ -1,10 +1,11 @@
 import React from "react";
 
-const TextField = () => {
+const TextField = ({ name, onChange, value }) => {
   return (
     <textarea
-      className="text"
-      value="Введите описание!"
+      name={name}
+      onChange={onChange}
+      value={value}
       className="form-input todo-text"
     ></textarea>
   );
