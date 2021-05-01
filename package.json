@@ -4,13 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently \"npm run client\" \"npm run server\"",
     "client": "webpack serve --open",
-    "server": "node server/public/backend.js",
-    "start": "npm run build-client && npm run server",
-    "build-server": "webpack --config-name server",
-    "build-client": "webpack --config-name client",
-    "dev-server": "nodemon server/public/backend.js",
-    "test": "webpack --config-name client"
+    "server": "nodemon --exec npm run babel-node -- server/src/app.js",
+    "babel-node": "babel-node --presets='@babel/preset-env' --ignore='node_modules'"
   },
   "author": "",
   "license": "ISC",
@@ -40,9 +37,10 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
-    "@babel/core": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
     "@babel/plugin-transform-runtime": "^7.13.15",
-    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-env": "^7.14.0",
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^8.1.1",

@@ -55,7 +55,7 @@ const TodoEditor = () => {
       <div className="todoEditor-container">
         <h1>ID: {id}</h1>
         <Link to="/" className="btn">
-          Назаl
+          Назад
         </Link>
         <form onSubmit={handleSubmit} className="form_container">
           <TitleField

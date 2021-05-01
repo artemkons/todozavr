@@ -1,6 +1,3 @@
-/* TODO: сделать кнопки нормально */
-
-
 * {
   margin: 0;
   padding: 0;
@@ -124,6 +121,7 @@ body {
 }
 .todo-text {
   height: 100px;
+  resize: vertical;
 }
 
 .form-input {
