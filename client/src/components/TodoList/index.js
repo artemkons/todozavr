@@ -4,20 +4,21 @@ import { Link } from "react-router-dom";
 let query = `
 query {
   allTodos {
+    id
     title
     text
   }
 }
 `;
 
-const TodoItem = ({ title }) => {
+const TodoItem = ({ title, text }) => {
   return (
     <Link to="/item" className="link">
       <div className="todo-item">
         <input type="checkbox" className="checkbox"></input>
         <div className="text-container">
           <h3 className="title">{title}</h3>
-          <p className="text">Текст - не больше 255 знаков</p>
+          <p className="text">{text}</p>
         </div>
       </div>
     </Link>
@@ -26,24 +27,30 @@ const TodoItem = ({ title }) => {
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+  console.log(todos);
 
-  useEffect(async () => {
-    let response = await fetch("/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query: query }),
-    });
-
-    let result = await response.json();
-    setTodos((prev) => [...prev, result.data.allTodos]);
+  //TODO: Обработать ошибки
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: query }),
+      });
+      const result = await response.json();
+      setTodos(result.data.allTodos);
+    };
+    fetchData();
   }, []);
 
   return (
     <div className="wrapper">
       <div className="todo-list">
-        {[] || todos.map((e) => <TodoItem title={e} />)}
+        {todos.map((e) => (
+          <TodoItem title={e.title} text={e.text} key={e.id} />
+        )) || "Fetching"}
       </div>
       <Link to="item/new" className="btn">
         Добавить

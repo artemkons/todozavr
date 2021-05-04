@@ -33,7 +33,7 @@ const TodoEditor = () => {
     e.preventDefault();
 
     // TODO: Попробовать таки вынести функцию эту
-    let response = await fetch("http://localhost:3000/api", {
+    let response = await fetch("api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,6 @@ const TodoEditor = () => {
     });
   };
 
-  // TODO:  Реализовать добавление тудушки
   return (
     <div className="wrapper">
       <div className="todoEditor-container">
