@@ -10,6 +10,8 @@ const TodoEditor = () => {
     title: "",
     text: "",
   });
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -29,30 +31,43 @@ const TodoEditor = () => {
       }
     }
     `;
-    console.log(query);
     e.preventDefault();
 
-    // TODO: Попробовать таки вынести функцию эту
-    let response = await fetch("api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query: query }),
-    });
+    setLoading(true);
+    setError(null);
 
-    let result = await response.json();
-    console.log(result);
-    setValue({
-      title: "",
-      text: "",
-    });
+    if (value.title === "") {
+      setError("Введите титульник!");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      let response = await fetch("api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: query }),
+      });
+
+      let result = await response.json();
+      setValue({
+        title: "",
+        text: "",
+      });
+    } catch (error) {
+      setError("Что-то пошло не так, попробуйте позже!");
+    }
+
+    setLoading(false);
   };
+
+  if (loading) return <h3>Loading...</h3>;
 
   return (
     <div className="wrapper">
       <div className="todoEditor-container">
-        <h1>ID: {id}</h1>
         <Link to="/" className="btn">
           Назад
         </Link>
@@ -61,6 +76,7 @@ const TodoEditor = () => {
             name="title"
             onChange={handleChange}
             value={value.title}
+            error={error}
           />
           <TextField name="text" onChange={handleChange} value={value.text} />
           <Button type="submit" />

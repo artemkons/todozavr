@@ -27,30 +27,39 @@ const TodoItem = ({ title, text }) => {
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
-  console.log(todos);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  //TODO: Обработать ошибки
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: query }),
-      });
-      const result = await response.json();
-      setTodos(result.data.allTodos);
+    const fetchTodos = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query: query }),
+        });
+        const result = await response.json();
+        setTodos(result.data.allTodos);
+      } catch (error) {
+        setError("Упс... Что-то пошло не так!");
+      }
+      setLoading(false);
     };
-    fetchData();
+    fetchTodos();
   }, []);
+
+  if (loading) return <h3>Loading...</h3>;
 
   return (
     <div className="wrapper">
       <div className="todo-list">
-        {todos.map((e) => (
-          <TodoItem title={e.title} text={e.text} key={e.id} />
-        )) || "Fetching"}
+        {error ||
+          todos.map((e) => (
+            <TodoItem title={e.title} text={e.text} key={e.id} />
+          ))}
       </div>
       <Link to="item/new" className="btn">
         Добавить

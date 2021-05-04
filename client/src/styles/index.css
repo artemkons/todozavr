@@ -24,7 +24,7 @@
     font-size: 12px;
   }
 }
-@media (min-width: 320ox) {
+@media (min-width: 320px) {
   html {
     font-size: 16px;
   }
@@ -44,7 +44,9 @@ body {
 }
 
 .todo-list {
-  width: 80%;
+  width: 100%;
+  height: 90vh;
+  overflow-y: scroll;
 }
 
 .todo-item {
@@ -65,8 +67,13 @@ body {
 }
 
 .btn {
+  margin-top: 5px;
+  display: block;
+  margin: 0 auto;
+  width: 20%;
+  text-align: center;
   background-color: #fff;
-  border: 1px solid #bcbcbc;
+  border: 1px solid #94d4d8;
   border-radius: 5px;
   padding: 3px;
   text-decoration: none;
@@ -74,11 +81,12 @@ body {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 300;
+  caret-color: transparent;
+  transition: border 0.5s;
 }
 .btn:hover {
   cursor: pointer;
-  border: 1px solid #94d4d8;
-  border-radius: 5px;
+  border: 1.5px solid #94d4d8;
 }
 
 .title {
@@ -132,11 +140,15 @@ body {
   font-size: 1rem;
   border: 1px solid #bcbcbc;
   border-radius: 5px;
+  transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.form-input:hover {
+  border-color: #94d4d8;
 }
 
 .form-input:focus {
-  border: 1px solid #94d4d8;
-  border-radius: 5px;
+  border: 1.5px solid #94d4d8;
   outline: none;
 }
 
@@ -153,4 +165,18 @@ body {
 
 .form_container > * {
   margin-bottom: 10px;
+}
+
+.todo-title-container {
+  width: 100%;
+}
+
+.error-field {
+  color: transparent;
+  transition: all 1.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.error-field-active {
+  color: red;
+  transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
