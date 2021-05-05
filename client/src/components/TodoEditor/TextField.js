@@ -6,7 +6,7 @@ const TextField = ({ name, onChange, value }) => {
       name={name}
       onChange={onChange}
       value={value}
-      className="form-input todo-text"
+      className="todo-editor__input todo-editor__text"
     ></textarea>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./styles/index.css";
+import "./styles/index.sass";
 import TodoList from "./components/TodoList";
 import TodoEditor from "./components/TodoEditor";
 

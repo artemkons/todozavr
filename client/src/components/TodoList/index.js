@@ -14,11 +14,11 @@ query {
 const TodoItem = ({ title, text }) => {
   return (
     <Link to="/item" className="link">
-      <div className="todo-item">
+      <div className="todo-list__item">
         <input type="checkbox" className="checkbox"></input>
-        <div className="text-container">
-          <h3 className="title">{title}</h3>
-          <p className="text">{text}</p>
+        <div>
+          <h3 className="todo-list__item__title">{title}</h3>
+          <p className="todo-list__item__text">{text}</p>
         </div>
       </div>
     </Link>

@@ -2,16 +2,22 @@ import React from "react";
 
 const TitleField = ({ name, onChange, value, error }) => {
   return (
-    <div className="todo-title-container">
+    <div className="todo-editor__title-container">
       <input
         name={name}
         type="text"
         onChange={onChange}
         value={value}
-        className="form-input todo-title"
+        className="todo-editor__input todo-editor__title-container__input"
       ></input>
-      <div className={error ? "error-field-active" : "error-field"}>
-        {error ? error: "Упс..."}
+      <div
+        className={
+          error
+            ? "todo-editor__title-container__error-field_active"
+            : "todo-editor__title-container__error-field"
+        }
+      >
+        {error ? error : "Упс..."}
       </div>
     </div>
   );

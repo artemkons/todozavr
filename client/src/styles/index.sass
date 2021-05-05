@@ -1,0 +1,156 @@
+$mainColor: #9ede73
+$secondColor: #f7ea00
+$thirdColor: #e48900
+$accentColor: #be0000
+
+@font-face
+    font-family: "Montserrat"
+    src: url(./Montserrat-Medium.ttf)
+    font-style: normal
+    font-weight: 500
+
+@font-face
+    font-family: "Montserrat"
+    src: url("./Montserrat-Light.ttf")
+    font-style: normal
+    font-weight: 300
+
+*
+    margin: 0
+    padding: 0
+
+html
+    @media (max-width: 320px)
+        font-size: 12px
+
+    @media (min-width: 320px)
+        font-size: 16px
+
+body
+    font: normal 300 1rem "Montserrat"
+
+.wrapper
+    width: 80%
+    max-width: 1400px
+    margin: 0 auto
+    padding-top: 5px
+
+.todo-list
+    width: 100%
+    height: 90vh
+    overflow-y: scroll
+
+    &__item
+        display: flex
+        justify-content: flex-start
+        align-items: center
+        flex-wrap: nowrap
+        width: 80%
+        height: 65px
+        margin-bottom: 10px
+        padding: 5px
+        border: 1px solid transparent
+        color: black
+
+        &:hover
+            border: 1px solid $secondColor
+            border-radius: 5px
+            cursor: pointer
+
+        &__title
+            color: $mainColor
+            font: 500 1.25rem "Montserrat"
+
+        &__text
+            font-size: 1rem
+
+%increasing-border
+    box-shadow: inset 0 0 0 1px $accentColor
+
+.btn
+    display: block
+    width: 20%
+    margin: 5px auto
+    padding: 3px
+    border: 1px solid $accentColor
+    border-radius: 5px
+    border-box: box-sizing
+    text-align: center
+    background-color: #fff
+    color: black
+    font: normal 300 1rem "Montserrat"
+    text-decoration: none
+    caret-color: transparent
+    transition: box-shadow 0.5s
+
+    &:hover
+        cursor: pointer
+        @extend %increasing-border
+
+.checkbox
+    width: 15px
+    height: 15px
+    margin-right: 10px
+    border: 1px solid #94d4d8
+    cursor: pointer
+
+.todo-editor
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    @media (min-width: 600px)
+        width: 80%
+        max-width: 600px
+        margin: 0 auto
+
+    & > *
+        margin-bottom: 10px
+
+    &__form
+        width: 80%
+        outline: none
+
+    &__input
+        width: 480px
+        border: 1px solid #bcbcbc
+        border-radius: 5px
+        border-box: box-sizing
+        font: normal 300 "Montserrat" serif
+        transition: box-shadow 0.5s cubic-bezier(0.65, 0, 0.35, 1)
+
+        &:hover
+            border-color: $accentColor
+
+        &:focus
+            @extend %increasing-border
+            outline: none
+
+    &__title-container
+        width: 100%
+
+        &__input
+            height: 25px
+
+        &__error-field
+            color: transparent
+            transition: all 1.6s cubic-bezier(0.65, 0, 0.35, 1)
+
+            &_active
+                color: red
+
+    &__text
+        height: 500px
+        resize: vertical
+
+    &__input-container
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 100%
+
+        & > *
+            margin-bottom: 10px
+
+a
+    text-decoration: none

@@ -67,11 +67,11 @@ const TodoEditor = () => {
 
   return (
     <div className="wrapper">
-      <div className="todoEditor-container">
+      <div className="todo-editor">
         <Link to="/" className="btn">
           Назад
         </Link>
-        <form onSubmit={handleSubmit} className="form_container">
+        <form onSubmit={handleSubmit} className="todo-editor__form">
           <TitleField
             name="title"
             onChange={handleChange}
