@@ -78,7 +78,12 @@ const TodoEditor = () => {
             value={value.title}
             error={error}
           />
-          <TextField name="text" onChange={handleChange} value={value.text} />
+          <TextField
+            name="text"
+            onChange={handleChange}
+            value={value.text}
+            error={error}
+          />
           <Button type="submit" />
         </form>
       </div>
