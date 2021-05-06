@@ -27,7 +27,7 @@ const TodoEditor = () => {
     let query = `
     mutation {
       addTodo(title:"${value.title}", text:"${value.text}") {
-        title
+        id
       }
     }
     `;

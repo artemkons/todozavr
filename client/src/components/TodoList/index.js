@@ -2,17 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CloseSvg from "../../styles/close-button.svg";
 
-let query = `
-query {
-  allTodos {
-    id
-    title
-    text
-  }
-}
-`;
+const TodoItem = ({ title, text, id }) => {
+  const handleDelete = async (e) => {
+    let query = `
+    mutation {
+      deleteTodo(id:"${id}") {
+        title
+      }
+    }
+    `;
 
-const TodoItem = ({ title, text }) => {
+    try {
+      let response = await fetch("api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: query }),
+      });
+
+      let result = await response.json();
+    } catch (error) {
+      setError("Что-то пошло не так, попробуйте позже!");
+    }
+  };
+
   return (
     <div className="todo-list__item">
       <input type="checkbox" className="checkbox"></input>
@@ -22,10 +36,7 @@ const TodoItem = ({ title, text }) => {
           <p className="todo-list__item__text">{text}</p>
         </div>
       </Link>
-      <button
-        className="todo-list__item__btn-delete"
-        onClick={() => console.log("Deleted!")}
-      >
+      <button className="todo-list__item__btn-delete" onClick={handleDelete}>
         {
           <CloseSvg
             width={12}
@@ -44,6 +55,16 @@ const TodoList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let query = `
+    query {
+      allTodos {
+        id
+        title
+        text
+      }
+    }
+  `;
+
     const fetchTodos = async () => {
       try {
         setLoading(true);
@@ -71,7 +92,7 @@ const TodoList = () => {
       <div className="todo-list">
         {error ||
           todos.map((e) => (
-            <TodoItem title={e.title} text={e.text} key={e.id} />
+            <TodoItem title={e.title} text={e.text} key={e.id} id={e.id} />
           ))}
       </div>
       <Link to="item/new" className="btn">
