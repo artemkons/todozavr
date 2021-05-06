@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import CloseSvg from "../../styles/close-button.svg";
 
 let query = `
 query {
@@ -13,15 +14,27 @@ query {
 
 const TodoItem = ({ title, text }) => {
   return (
-    <Link to="/item" className="link">
-      <div className="todo-list__item">
-        <input type="checkbox" className="checkbox"></input>
+    <div className="todo-list__item">
+      <input type="checkbox" className="checkbox"></input>
+      <Link to="/item" className="link">
         <div>
           <h3 className="todo-list__item__title">{title}</h3>
           <p className="todo-list__item__text">{text}</p>
         </div>
-      </div>
-    </Link>
+      </Link>
+      <button
+        className="todo-list__item__btn-delete"
+        onClick={() => console.log("Deleted!")}
+      >
+        {
+          <CloseSvg
+            width={12}
+            height={12}
+            className="todo-list__item__btn-delete__svg"
+          />
+        }
+      </button>
+    </div>
   );
 };
 
