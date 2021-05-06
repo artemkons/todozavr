@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import TitleField from "./TitleField";
 import TextField from "./TextField";
 import Button from "./Button";
+import useReq from "../../hooks/req.hook";
 
 const TodoEditor = () => {
   let { id } = useParams();
@@ -10,8 +11,7 @@ const TodoEditor = () => {
     title: "",
     text: "",
   });
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, error, response, makeQuery, setError, setLoading] = useReq();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -24,6 +24,8 @@ const TodoEditor = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     let query = `
     mutation {
       addTodo(title:"${value.title}", text:"${value.text}") {
@@ -31,10 +33,6 @@ const TodoEditor = () => {
       }
     }
     `;
-    e.preventDefault();
-
-    setLoading(true);
-    setError(null);
 
     if (value.title === "") {
       setError("Введите титульник!");
@@ -42,25 +40,11 @@ const TodoEditor = () => {
       return;
     }
 
-    try {
-      let response = await fetch("api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: query }),
-      });
-
-      let result = await response.json();
-      setValue({
-        title: "",
-        text: "",
-      });
-    } catch (error) {
-      setError("Что-то пошло не так, попробуйте позже!");
-    }
-
-    setLoading(false);
+    makeQuery(query);
+    setValue({
+      title: "",
+      text: "",
+    });
   };
 
   if (loading) return <h3>Loading...</h3>;

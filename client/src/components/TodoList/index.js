@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CloseSvg from "../../styles/close-button.svg";
+import useReq from "../../hooks/req.hook";
 
 const TodoItem = ({ title, text, id }) => {
+  const [loading, error, response, makeQuery] = useReq();
+
   const handleDelete = async (e) => {
     let query = `
     mutation {
@@ -12,19 +15,7 @@ const TodoItem = ({ title, text, id }) => {
     }
     `;
 
-    try {
-      let response = await fetch("api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: query }),
-      });
-
-      let result = await response.json();
-    } catch (error) {
-      setError("Что-то пошло не так, попробуйте позже!");
-    }
+    makeQuery(query);
   };
 
   return (
