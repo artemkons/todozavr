@@ -60,7 +60,13 @@ const TodoEditor = () => {
     });
   };
 
-  if (loading) return <h3>Loading...</h3>;
+  if (loading)
+  // FIXME: вынеси меня в отдельный комп.
+    return (
+      <div className="wrapper_loading">
+        <h1>Loading...</h1>
+      </div>
+    );
 
   return (
     <div className="wrapper">

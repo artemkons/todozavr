@@ -32,12 +32,21 @@ body
 button
     font: normal 300 1rem "Montserrat"
 
+a
+    text-decoration: none
+
 .wrapper
     box-sizing: border-box
     width: 80%
     max-width: 1400px
     margin: 0 auto
     padding-top: 5px
+
+    &_loading
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 100vh
 
     @media (max-width: 375px)
         width: 100%
@@ -94,6 +103,12 @@ button
 
             &__svg
                 fill: transparent
+
+            &:hover
+                background-color: red
+
+                .todo-list__item__btn-delete__svg
+                    fill: #fff
 
         &__container:hover .todo-list__item__title
             color: darken($mainColor, 15%)
@@ -175,6 +190,9 @@ button
             border: 1px solid red
 
     &__title-container
+        display: flex
+        flex-direction: column
+        align-items: center
         width: 100%
 
         &__input
@@ -203,5 +221,3 @@ button
         & > *
             margin-bottom: 10px
 
-a
-    text-decoration: none

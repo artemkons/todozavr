@@ -59,7 +59,6 @@ const TodoList = () => {
       }
     }
   `;
-
     const fetchTodos = async () => {
       try {
         setLoading(true);
@@ -80,7 +79,12 @@ const TodoList = () => {
     fetchTodos();
   }, []);
 
-  if (loading) return <h3>Loading...</h3>;
+  if (loading)
+    return (
+      <div className="wrapper_loading">
+        <h1>Loading...</h1>
+      </div>
+    );
 
   return (
     <div className="wrapper">
