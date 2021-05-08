@@ -1,10 +1,10 @@
 import React from "react";
 
-//TODO:  Возможно это мне и не нужно
-const Button = ({ type }) => {
+//TODO:  Возможно это мне и не нужно, id передавать тоже ни к чему
+const Button = ({ type, id }) => {
   return (
     <button className="btn" type={type}>
-      Добавить
+      {id ? "Изменить" : " Добавить"}
     </button>
   );
 };

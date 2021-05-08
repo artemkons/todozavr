@@ -11,7 +11,8 @@ render(
       <Route exact path="/">
         <TodoList />
       </Route>
-      <Route path="/item/:id">
+      {/*  TODO: подумать, как лучше чтобы не передавать столько параметров */}
+      <Route path={["/item/:id/:title/:text", "/new"]}>
         <TodoEditor />
       </Route>
     </Switch>

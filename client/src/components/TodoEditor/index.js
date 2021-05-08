@@ -6,10 +6,10 @@ import Button from "./Button";
 import useReq from "../../hooks/req.hook";
 
 const TodoEditor = () => {
-  let { id } = useParams();
+  let { id, title, text } = useParams();
   const [value, setValue] = useState({
-    title: "",
-    text: "",
+    title: title ? title : "",
+    text: text ? text : "",
   });
   const [loading, error, response, makeQuery, setError, setLoading] = useReq();
 
@@ -26,9 +26,17 @@ const TodoEditor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let query = `
+    let newTodoQuery = `
     mutation {
       addTodo(title:"${value.title}", text:"${value.text}") {
+        id
+      }
+    }
+    `;
+
+    let editTodoQuery = `
+    mutation {
+      editTodo(id:"${id}", title:"${value.title}", text:"${value.text}") {
         id
       }
     }
@@ -40,7 +48,12 @@ const TodoEditor = () => {
       return;
     }
 
-    makeQuery(query);
+    if (id) {
+      makeQuery(editTodoQuery, "");
+      return;
+    }
+
+    makeQuery(newTodoQuery);
     setValue({
       title: "",
       text: "",
@@ -68,7 +81,7 @@ const TodoEditor = () => {
             value={value.text}
             error={error}
           />
-          <Button type="submit" />
+          <Button type="submit" id={id} />
         </form>
       </div>
     </div>

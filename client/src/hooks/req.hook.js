@@ -5,11 +5,11 @@ const useReq = () => {
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
 
-  const makeQuery = async (query) => {
+  const makeQuery = async (query, url = "api") => {
     setLoading(true);
     setError(null);
     try {
-      let response = await fetch("api", {
+      let response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

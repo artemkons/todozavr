@@ -16,14 +16,16 @@ const TodoItem = ({ title, text, id, setTodos }) => {
     `;
 
     makeQuery(query);
-    // FIXME: надо что-нибудь придумать 
+    // FIXME: надо что-нибудь придумать
     // setTodos((prev) => prev.filter((e) => e.id != id));
   };
+
+  const handleEdit = async (e) => {};
 
   return (
     <div className="todo-list__item">
       <input type="checkbox" className="checkbox"></input>
-      <Link to="/item" className="link">
+      <Link to={`/item/${id}/${title}/${text}`} className="link">
         <div className="todo-list__item__container">
           <h3 className="todo-list__item__title">{title}</h3>
           <p className="todo-list__item__text">{text}</p>
@@ -94,7 +96,7 @@ const TodoList = () => {
             />
           ))}
       </div>
-      <Link to="item/new" className="btn">
+      <Link to="/new" className="btn">
         Добавить
       </Link>
     </div>
