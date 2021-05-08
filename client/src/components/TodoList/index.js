@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 
-const TodoItem = ({ title, text, id }) => {
+const TodoItem = ({ title, text, id, setTodos }) => {
   const [loading, error, response, makeQuery] = useReq();
 
   const handleDelete = async (e) => {
@@ -16,13 +16,15 @@ const TodoItem = ({ title, text, id }) => {
     `;
 
     makeQuery(query);
+    // FIXME: надо что-нибудь придумать 
+    // setTodos((prev) => prev.filter((e) => e.id != id));
   };
 
   return (
     <div className="todo-list__item">
       <input type="checkbox" className="checkbox"></input>
       <Link to="/item" className="link">
-        <div>
+        <div className="todo-list__item__container">
           <h3 className="todo-list__item__title">{title}</h3>
           <p className="todo-list__item__text">{text}</p>
         </div>
@@ -83,7 +85,13 @@ const TodoList = () => {
       <div className="todo-list">
         {error ||
           todos.map((e) => (
-            <TodoItem title={e.title} text={e.text} key={e.id} id={e.id} />
+            <TodoItem
+              title={e.title}
+              text={e.text}
+              key={e.id}
+              id={e.id}
+              setTodos={setTodos}
+            />
           ))}
       </div>
       <Link to="item/new" className="btn">
