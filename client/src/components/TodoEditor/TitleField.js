@@ -13,6 +13,7 @@ const TitleField = ({ name, onChange, value, error }) => {
           (error ? "todo-editor__input_error " : "") +
           "todo-editor__title-container__input"
         }
+        autoFocus
       ></input>
       <div
         className={

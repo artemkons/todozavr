@@ -25,7 +25,7 @@ const useReq = () => {
     setLoading(false);
   };
 
-  return [loading, error, response, makeQuery, setError, setLoading];
+  return { loading, error, response, makeQuery, setError, setLoading };
 };
 
 export default useReq;

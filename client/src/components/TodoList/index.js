@@ -4,8 +4,7 @@ import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 
 const TodoItem = ({ title, text, id, setTodos }) => {
-  //FIXME: мб можно деструктурировать удобнее
-  const [loading, error, response, makeQuery] = useReq();
+  const { loading, error, response, makeQuery } = useReq();
 
   const handleDelete = async (e) => {
     let query = `
@@ -35,7 +34,7 @@ const TodoItem = ({ title, text, id, setTodos }) => {
         </div>
       </Link>
       {loading ? (
-        <div className="todo-list__item__loader">"loading..."</div>
+        <div className="todo-list__item__loader">Loading...</div>
       ) : (
         <button className="todo-list__item__btn-delete" onClick={handleDelete}>
           {

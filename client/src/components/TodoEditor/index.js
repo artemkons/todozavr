@@ -11,7 +11,7 @@ const TodoEditor = () => {
     title: title ? title : "",
     text: text ? text : "",
   });
-  const [loading, error, response, makeQuery, setError, setLoading] = useReq();
+  const { loading, error, makeQuery, setError, setLoading } = useReq();
 
   const handleChange = (e) => {
     e.preventDefault();
