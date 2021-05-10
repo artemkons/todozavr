@@ -4,23 +4,26 @@ import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 
 const TodoItem = ({ title, text, id, setTodos }) => {
+  //FIXME: мб можно деструктурировать удобнее
   const [loading, error, response, makeQuery] = useReq();
 
   const handleDelete = async (e) => {
     let query = `
     mutation {
       deleteTodo(id:"${id}") {
+        id
         title
+        text
       }
     }
     `;
 
-    makeQuery(query);
-    // FIXME: надо что-нибудь придумать
-    // setTodos((prev) => prev.filter((e) => e.id != id));
+    await makeQuery(query);
   };
 
-  const handleEdit = async (e) => {};
+  useEffect(() => {
+    if (response) setTodos(response.data.deleteTodo);
+  }, [response]);
 
   return (
     <div className="todo-list__item">
@@ -31,15 +34,19 @@ const TodoItem = ({ title, text, id, setTodos }) => {
           <p className="todo-list__item__text">{text}</p>
         </div>
       </Link>
-      <button className="todo-list__item__btn-delete" onClick={handleDelete}>
-        {
-          <CloseSvg
-            width={12}
-            height={12}
-            className="todo-list__item__btn-delete__svg"
-          />
-        }
-      </button>
+      {loading ? (
+        <div className="todo-list__item__loader">"loading..."</div>
+      ) : (
+        <button className="todo-list__item__btn-delete" onClick={handleDelete}>
+          {
+            <CloseSvg
+              width={12}
+              height={12}
+              className="todo-list__item__btn-delete__svg"
+            />
+          }
+        </button>
+      )}
     </div>
   );
 };

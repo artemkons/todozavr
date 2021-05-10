@@ -12,7 +12,8 @@ var root = {
     return await todo.save();
   },
   deleteTodo: async ({ id }) => {
-    return await Todos.findByIdAndDelete(id);
+    await Todos.findByIdAndDelete(id);
+    return await Todos.find({});
   },
   editTodo: async ({ id, title, text }) => {
     return await Todos.findByIdAndUpdate(id, { title, text }, { new: true });

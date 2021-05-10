@@ -49,11 +49,11 @@ const TodoEditor = () => {
     }
 
     if (id) {
-      makeQuery(editTodoQuery, "");
+      await makeQuery(editTodoQuery, "");
       return;
     }
 
-    makeQuery(newTodoQuery);
+    await makeQuery(newTodoQuery);
     setValue({
       title: "",
       text: "",
@@ -61,7 +61,7 @@ const TodoEditor = () => {
   };
 
   if (loading)
-  // FIXME: вынеси меня в отдельный комп.
+    // FIXME: вынеси меня в отдельный комп.
     return (
       <div className="wrapper_loading">
         <h1>Loading...</h1>
