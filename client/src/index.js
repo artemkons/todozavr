@@ -5,14 +5,14 @@ import "./styles/index.sass";
 import TodoList from "./components/TodoList";
 import TodoEditor from "./components/TodoEditor";
 
+// возможно стоит делать запросы здесь и получать тудушки тут же
 render(
   <Router>
     <Switch>
       <Route exact path="/">
         <TodoList />
       </Route>
-      {/*  TODO: подумать, как лучше чтобы не передавать столько параметров */}
-      <Route path={["/item/:id/:title/:text", "/new"]}>
+      <Route path={["/item/:id/:title/:text", "/item/:id/:title/", "/new"]}>
         <TodoEditor />
       </Route>
     </Switch>
