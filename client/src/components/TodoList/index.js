@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 
-const TodoItem = ({ title, text, id, setTodos }) => {
-  const { loading, error, response, makeQuery } = useReq();
+const TodoItem = ({ title, text, done, id, setTodos }) => {
+  const { loading, error, makeQuery } = useReq();
 
   const handleDelete = async (e) => {
     let query = `
@@ -17,16 +17,36 @@ const TodoItem = ({ title, text, id, setTodos }) => {
     }
     `;
 
-    await makeQuery(query);
+    makeQuery(query);
+    setTodos((prev) => prev.filter((el) => el.id != id));
   };
 
-  useEffect(() => {
-    if (response) setTodos(response.data.deleteTodo);
-  }, [response]);
+  const handleCheckbox = async (e) => {
+    let query = `
+    mutation {
+      doneTodo(id:"${id}") {
+        title
+      }
+    }
+    `;
+
+    makeQuery(query);
+    setTodos((prev) =>
+      prev.map((el) => {
+        if (el.id === id) el.done = !el.done;
+        return el;
+      })
+    );
+  };
 
   return (
     <div className="todo-list__item">
-      <input type="checkbox" className="checkbox"></input>
+      <input
+        type="checkbox"
+        className="checkbox"
+        checked={done}
+        onChange={handleCheckbox}
+      ></input>
       <Link to={`/item/${id}/${title}/${text}`} className="link">
         <div className="todo-list__item__container">
           <h3 className="todo-list__item__title">{title}</h3>
@@ -62,6 +82,7 @@ const TodoList = () => {
         id
         title
         text
+        done
       }
     }
   `;
@@ -100,6 +121,7 @@ const TodoList = () => {
             <TodoItem
               title={e.title}
               text={e.text}
+              done={e.done}
               key={e.id}
               id={e.id}
               setTodos={setTodos}

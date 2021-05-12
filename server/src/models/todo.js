@@ -4,6 +4,7 @@ import { Schema } from "mongoose";
 const todoSchema = new Schema({
   title: String,
   text: String,
+  done: { type: Boolean, default: false },
 });
 
 export default mongoose.model("Todo", todoSchema);
