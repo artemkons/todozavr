@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Loading from "../Loading";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 
 const TodoItem = ({ title, text, done, id, setTodos }) => {
-  const { loading, error, makeQuery } = useReq();
+  const { loading, makeQuery } = useReq();
 
   const handleDelete = async (e) => {
     let query = `
@@ -106,12 +107,7 @@ const TodoList = () => {
     fetchTodos();
   }, []);
 
-  if (loading)
-    return (
-      <div className="wrapper_loading">
-        <h1>Loading...</h1>
-      </div>
-    );
+  if (loading) return <Loading />;
 
   return (
     <div className="wrapper">

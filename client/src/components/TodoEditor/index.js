@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import TitleField from "./TitleField";
 import TextField from "./TextField";
-import Button from "./Button";
+import Loading from "../Loading";
 import useReq from "../../hooks/req.hook";
 
 const TodoEditor = () => {
@@ -60,13 +60,7 @@ const TodoEditor = () => {
     });
   };
 
-  if (loading)
-    // FIXME: вынеси меня в отдельный комп.
-    return (
-      <div className="wrapper_loading">
-        <h1>Loading...</h1>
-      </div>
-    );
+  if (loading) return <Loading />;
 
   return (
     <div className="wrapper">
@@ -87,7 +81,7 @@ const TodoEditor = () => {
             value={value.text}
             error={error}
           />
-          <Button type="submit" id={id} />
+          <button className="btn">{id ? "Изменить" : " Добавить"}</button>
         </form>
       </div>
     </div>

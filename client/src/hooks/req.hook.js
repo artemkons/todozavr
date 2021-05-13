@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const useReq = () => {
   const [loading, setLoading] = useState(false);

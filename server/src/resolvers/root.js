@@ -12,9 +12,7 @@ var root = {
     return await todo.save();
   },
   deleteTodo: async ({ id }) => {
-    // FIXME: а оно мне надо здесь?
-    await Todos.findByIdAndDelete(id);
-    return await Todos.find({});
+    return await Todos.findByIdAndDelete(id);
   },
   editTodo: async ({ id, title, text }) => {
     return await Todos.findByIdAndUpdate(id, { title, text }, { new: true });
