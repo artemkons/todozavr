@@ -5,6 +5,10 @@ import TextField from "./TextField";
 import Loading from "../Loading";
 import useReq from "../../hooks/req.hook";
 
+/**
+ * Creates a todo editor window.
+ * @returns Todo editor window.
+ */
 const TodoEditor = () => {
   let { id, title, text } = useParams();
   const [value, setValue] = useState({

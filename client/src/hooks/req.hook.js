@@ -1,10 +1,19 @@
 import { useState } from "react";
 
+/**
+ * Makes a request to api.
+ * @returns {object} Object with helper hooks.
+ */
 const useReq = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
 
+  /**
+   * Makes a response to api. Modulates Loading, Error and Response values.
+   * @param {string} query
+   * @param {string} url
+   */
   const makeQuery = async (query, url = "api") => {
     setLoading(true);
     setError(null);

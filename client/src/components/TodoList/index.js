@@ -4,6 +4,15 @@ import Loading from "../Loading";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 
+/**
+ * Creates a todo item.
+ * @param {string} title
+ * @param {string} text
+ * @param {boolean} done
+ * @param {string} id
+ * @param {function} setTodos
+ * @returns Todo item.
+ */
 const TodoItem = ({ title, text, done, id, setTodos }) => {
   const { loading, makeQuery } = useReq();
 
@@ -71,6 +80,10 @@ const TodoItem = ({ title, text, done, id, setTodos }) => {
   );
 };
 
+/**
+ * Creates a todo list.
+ * @returns Todo list.
+ */
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(false);
