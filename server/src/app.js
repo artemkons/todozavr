@@ -5,7 +5,7 @@ import schema from "./schema/schema";
 import root from "./resolvers/root";
 
 const URL =
-  "mongodb+srv://artemkons:123@cluster0.9mla7.mongodb.net/todos_db?retryWrites=true&w=majority";
+  "mongodb+srv://artemkons:<password>@cluster0.9mla7.mongodb.net/todos_db?retryWrites=true&w=majority";
 
 mongoose.connect(URL, {
   useNewUrlParser: true,
