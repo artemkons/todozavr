@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run client\" \"npm run server\" && sudo service nginx start",
-    "client": "webpack serve --open --config webpack.dev.js",
+    "client": "webpack serve --open --config webpack.front.js --config-name front-dev",
     "server": "nodemon --exec npm run babel-node -- server/src/app.js",
     "babel-node": "babel-node --presets='@babel/preset-env' --ignore='node_modules'",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.backend.js && webpack --config webpack.front.js --config-name front-prod"
   },
   "author": "",
   "license": "ISC",

@@ -1,11 +1,13 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { merge } = require("webpack-merge");
 
-module.exports = {
+const commonConf = {
   entry: "./client/src",
   output: {
     path: path.resolve(__dirname, "client/public"),
     filename: "bundle.js",
+    publicPath: "./",
     assetModuleFilename: "[hash][ext][query]",
   },
   module: {
@@ -73,10 +75,17 @@ module.exports = {
       template: "./client/src/index.html",
       filename: "index.html",
     }),
-    //   new webpack.LoaderOptionsPlugin({
-    //       options: {
-
-    //       }
-    //   })
   ],
 };
+
+module.exports = [
+  merge(commonConf, {
+    mode: "development",
+    name: "front-dev",
+    devtool: "source-map",
+    devServer: {
+      contentBase: "./client/public",
+    },
+  }),
+  merge(commonConf, { mode: "production", name: "front-prod" }),
+];
