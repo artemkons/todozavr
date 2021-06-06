@@ -1,16 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { merge } = require("webpack-merge");
-const { webpack, web } = require("webpack");
 
 const commonConf = {
-  entry: {
-    main: [
-      "webpack-dev-server/client",
-      "webpack/hot/dev-server",
-      "./client/src",
-    ],
-  },
+  entry: "./client/src",
   output: {
     path: path.resolve(__dirname, "client/public"),
     filename: "bundle.js",
