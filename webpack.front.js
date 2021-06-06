@@ -85,27 +85,27 @@ const commonConf = {
   ],
 };
 
-// module.exports = [
-//   merge(commonConf, {
-//     mode: "development",
-//     name: "front-dev",
-//     devtool: "inline-source-map",
-//     devServer: {
-//       contentBase: "./client/public",
-//       hot: true,
-//       inline: true,
-//       compress: true,
-//     },
-//   }),
-//   merge(commonConf, { mode: "production", name: "front-prod" }),
-// ];
+module.exports = [
+  merge(commonConf, {
+    mode: "development",
+    name: "front-dev",
+    devtool: "inline-source-map",
+    devServer: {
+      contentBase: "./client/public",
+      hot: true,
+      inline: true,
+      compress: true,
+    },
+  }),
+  merge(commonConf, { mode: "production", name: "front-prod" }),
+];
 
-module.exports = merge(commonConf, {
-  mode: "development",
-  name: "front-dev",
-  devtool: "source-map",
-  devServer: {
-    contentBase: "./client/public",
-    hot: true,
-  },
-});
+// module.exports = merge(commonConf, {
+//   mode: "development",
+//   name: "front-dev",
+//   devtool: "source-map",
+//   devServer: {
+//     contentBase: "./client/public",
+//     hot: true,
+//   },
+// });
