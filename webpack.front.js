@@ -1,13 +1,20 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { merge } = require("webpack-merge");
+const { webpack, web } = require("webpack");
 
 const commonConf = {
-  entry: "./client/src",
+  entry: {
+    main: [
+      "webpack-dev-server/client",
+      "webpack/hot/dev-server",
+      "./client/src",
+    ],
+  },
   output: {
     path: path.resolve(__dirname, "client/public"),
     filename: "bundle.js",
-    publicPath: "./",
+    publicPath: "/",
     assetModuleFilename: "[hash][ext][query]",
   },
   module: {
@@ -78,14 +85,27 @@ const commonConf = {
   ],
 };
 
-module.exports = [
-  merge(commonConf, {
-    mode: "development",
-    name: "front-dev",
-    devtool: "source-map",
-    devServer: {
-      contentBase: "./client/public",
-    },
-  }),
-  merge(commonConf, { mode: "production", name: "front-prod" }),
-];
+// module.exports = [
+//   merge(commonConf, {
+//     mode: "development",
+//     name: "front-dev",
+//     devtool: "inline-source-map",
+//     devServer: {
+//       contentBase: "./client/public",
+//       hot: true,
+//       inline: true,
+//       compress: true,
+//     },
+//   }),
+//   merge(commonConf, { mode: "production", name: "front-prod" }),
+// ];
+
+module.exports = merge(commonConf, {
+  mode: "development",
+  name: "front-dev",
+  devtool: "source-map",
+  devServer: {
+    contentBase: "./client/public",
+    hot: true,
+  },
+});

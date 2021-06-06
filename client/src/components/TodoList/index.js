@@ -113,7 +113,7 @@ const TodoList = () => {
         const result = await response.json();
         setTodos(result.data.allTodos);
       } catch (error) {
-        setError("Упс... Что-то пошло не так!");
+        setError("Упс... Что-то пошло не так");
       }
       setLoading(false);
     };
