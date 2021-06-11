@@ -19,7 +19,7 @@ dbConnection.once("open", () => console.log("Connected to DB!"));
 const app = express();
 const PORT = 3000;
 
-app.use("/", express.static("client/public"));
+// app.use("/", express.static("client/public"));
 
 app.use(
   "/api",
