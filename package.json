@@ -15,6 +15,9 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@babel/runtime": "^7.13.16",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "app-root-path": "^3.0.0",
     "assert": "^2.0.0",
     "browserify-zlib": "^0.2.0",

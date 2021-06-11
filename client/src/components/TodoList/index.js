@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
+import { data } from "browserslist";
 
 /**
  * Creates a todo item.
@@ -13,7 +16,7 @@ import useReq from "../../hooks/req.hook";
  * @param {function} setTodos
  * @returns Todo item.
  */
-const TodoItem = ({ title, text, done, id, setTodos }) => {
+const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
   const { loading, makeQuery } = useReq();
 
   const handleDelete = async (e) => {
@@ -49,6 +52,8 @@ const TodoItem = ({ title, text, done, id, setTodos }) => {
     );
   };
 
+  data = deadline ? new Date(Number(deadline)) : null;
+
   return (
     <div className="todo-list__item">
       <input
@@ -59,7 +64,17 @@ const TodoItem = ({ title, text, done, id, setTodos }) => {
       ></input>
       <Link to={`/item/${id}/${title}/${text}`} className="link">
         <div className="todo-list__item__container">
-          <h3 className="todo-list__item__title">{title}</h3>
+          <h3 className="todo-list__item__title">
+            {title}
+            <p className="todo-list__item__time-input">
+              {data ? (
+                <FontAwesomeIcon className="svg-icon" icon={faClock} />
+              ) : (
+                ""
+              )}
+              {data ? data.toLocaleString("ru") : ""}
+            </p>
+          </h3>
           <p className="todo-list__item__text">{text}</p>
         </div>
       </Link>
@@ -97,6 +112,7 @@ const TodoList = () => {
         title
         text
         done
+        deadline
       }
     }
   `;
@@ -131,6 +147,7 @@ const TodoList = () => {
               title={e.title}
               text={e.text}
               done={e.done}
+              deadline={e.deadline}
               key={e.id}
               id={e.id}
               setTodos={setTodos}
