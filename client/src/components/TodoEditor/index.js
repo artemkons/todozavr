@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "./styles/calendar.sass"
+import "./styles/calendar.sass";
 import TitleField from "./TitleField";
 import TextField from "./TextField";
 import Loading from "../Loading";
@@ -36,7 +36,7 @@ const TodoEditor = () => {
 
     let newTodoQuery = `
     mutation {
-      addTodo(title:"${value.title}", text:"${value.text}") {
+      addTodo(title:"${value.title}", text:"${value.text}", deadline:"${date}") {
         id
       }
     }

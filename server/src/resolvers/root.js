@@ -7,8 +7,8 @@ var root = {
   todo: async ({ id }) => {
     return await Todos.findById(id);
   },
-  addTodo: async ({ title, text }) => {
-    const todo = new Todos({ title, text: text ? text : "" });
+  addTodo: async ({ title, text, deadline }) => {
+    const todo = new Todos({ title, text: text ? text : "", deadline });
     return await todo.save();
   },
   deleteTodo: async ({ id }) => {

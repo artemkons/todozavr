@@ -6,6 +6,7 @@ var schema = buildSchema(`
     title: String!
     text: String!
     done: Boolean!
+    deadline: String
   }
 
   type Query {
@@ -14,7 +15,7 @@ var schema = buildSchema(`
   }
 
   type Mutation {
-    addTodo(title: String!, text: String): Todo!
+    addTodo(title: String!, text: String, deadline: String): Todo!
     deleteTodo(id: ID!): [Todo]
     editTodo(id: ID!, title: String!, text: String!): Todo!
     doneTodo(id: ID!): Todo! 
