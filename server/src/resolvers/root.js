@@ -14,8 +14,8 @@ var root = {
   deleteTodo: async ({ id }) => {
     return await Todos.findByIdAndDelete(id);
   },
-  editTodo: async ({ id, title, text }) => {
-    return await Todos.findByIdAndUpdate(id, { title, text }, { new: true });
+  editTodo: async ({ id, title, text, deadline }) => {
+    return await Todos.findByIdAndUpdate(id, { title, text, deadline }, { new: true });
   },
   doneTodo: async ({ id }) => {
     let todo = await Todos.findById(id);
