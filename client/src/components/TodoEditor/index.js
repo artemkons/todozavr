@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import TitleField from "./TitleField";
 import TextField from "./TextField";
 import Loading from "../Loading";
-import DataField from "./DataField";
 import useReq from "../../hooks/req.hook";
+import Calendar from "react-calendar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { Button, Modal } from "react-bulma-components";
+import "react-calendar/dist/Calendar.css";
+import "./styles/date.sass";
 
 /**
  * Creates a todo editor window.
@@ -19,6 +24,9 @@ const TodoEditor = () => {
   const { loading, error, makeQuery, setError, setLoading } = useReq();
   // FIXME: Занести мб в value?
   const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState("00:00");
+
+  const [isModalActive, setIsModalActive] = useState(false);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -33,9 +41,15 @@ const TodoEditor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let deadline = date;
+    let [hours, minutes] = time.split(":");
+    deadline.setHours(hours);
+    deadline.setMinutes(minutes);
+
+    console.log(deadline);
     let newTodoQuery = `
     mutation {
-      addTodo(title:"${value.title}", text:"${value.text}", deadline:"${date}") {
+      addTodo(title:"${value.title}", text:"${value.text}", deadline:"${deadline}") {
         id
       }
     }
@@ -69,6 +83,10 @@ const TodoEditor = () => {
 
   if (loading) return <Loading />;
 
+  let handleTime = (e) => {
+    setTime(e.target.value);
+  };
+
   return (
     <div className="wrapper">
       <div className="todo-editor">
@@ -82,7 +100,27 @@ const TodoEditor = () => {
             value={value.title}
             error={error}
           />
-          <DataField onChange={setDate} value={date} />
+          {/* Date input block */}
+          <div className="date-input">
+            <input type="time" value={time} onChange={handleTime} />
+            <Button
+              onClick={() => setIsModalActive(true)}
+              size="small"
+              type="button"
+            >
+              <FontAwesomeIcon icon={faCalendarAlt} />
+            </Button>
+            <Modal show={isModalActive} onClose={() => setIsModalActive(false)}>
+              <Modal.Content>
+                <Calendar
+                  minDate={new Date()}
+                  onChange={setDate}
+                  value={date}
+                />
+              </Modal.Content>
+            </Modal>
+          </div>
+          {/* Date input block ends */}
           <TextField
             name="text"
             onChange={handleChange}

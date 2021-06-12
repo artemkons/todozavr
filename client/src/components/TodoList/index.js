@@ -14,17 +14,13 @@ import useReq from "../../hooks/req.hook";
 const DataBlock = ({ deadline }) => {
   let curDate = new Date();
   let date = deadline ? new Date(Number(deadline)) : null;
-  let options =
-    curDate.getFullYear() === date.getFullYear()
-      ? {
-          month: "short",
-          day: "numeric",
-        }
-      : {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        };
+  let options = {
+    ...(curDate.getFullYear() === date.getFullYear() && { year: "numeric" }),
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
 
   return (
     <>
