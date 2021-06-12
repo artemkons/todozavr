@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "./styles/calendar.sass";
 import TitleField from "./TitleField";
 import TextField from "./TextField";
 import Loading from "../Loading";
+import DataField from "./DataField";
 import useReq from "../../hooks/req.hook";
 
 /**
@@ -19,6 +17,7 @@ const TodoEditor = () => {
     text: text ? text : "",
   });
   const { loading, error, makeQuery, setError, setLoading } = useReq();
+  // FIXME: Занести мб в value?
   const [date, setDate] = useState(new Date());
 
   const handleChange = (e) => {
@@ -68,10 +67,6 @@ const TodoEditor = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(date);
-  }, [date]);
-
   if (loading) return <Loading />;
 
   return (
@@ -87,7 +82,7 @@ const TodoEditor = () => {
             value={value.title}
             error={error}
           />
-          <Calendar minDate={new Date()} onChange={setDate} value={date} />
+          <DataField onChange={setDate} value={date} />
           <TextField
             name="text"
             onChange={handleChange}

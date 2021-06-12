@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bulma/bulma.sass";
 import "./styles/index.sass";
 import TodoList from "./components/TodoList";
 import TodoEditor from "./components/TodoEditor";
