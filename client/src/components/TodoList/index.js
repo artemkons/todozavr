@@ -88,7 +88,6 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
           <h3 className="todo-list__item__title">
             {title}
             <p className="todo-list__item__time-input">
-              {/* FIXME: Time block */}
               {deadline ? <DataBlock deadline={deadline} /> : ""}
             </p>
           </h3>
@@ -113,7 +112,7 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
 };
 
 /**
- * Creates a todo list.
+ * Creates a todo list. Makes a request: allTodos.
  * @returns Todo list.
  */
 const TodoList = () => {

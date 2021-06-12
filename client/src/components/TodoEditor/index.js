@@ -12,7 +12,7 @@ import "react-calendar/dist/Calendar.css";
 import "./styles/date.sass";
 
 /**
- * Creates a todo editor window.
+ * Creates a todo editor window. Makes a mutation query for adding new todo and editing existing todo.
  * @returns Todo editor window.
  */
 const TodoEditor = () => {
@@ -22,7 +22,6 @@ const TodoEditor = () => {
     text: text ? text : "",
   });
   const { loading, error, makeQuery, setError, setLoading } = useReq();
-  // FIXME: Занести мб в value?
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("00:00");
 
@@ -56,7 +55,7 @@ const TodoEditor = () => {
 
     let editTodoQuery = `
     mutation {
-      editTodo(id:"${id}", title:"${value.title}", text:"${value.text}") {
+      editTodo(id:"${id}", title:"${value.title}", text:"${value.text}", deadline:"${deadline}") {
         id
       }
     }
@@ -80,11 +79,11 @@ const TodoEditor = () => {
     });
   };
 
-  if (loading) return <Loading />;
-
   let handleTime = (e) => {
     setTime(e.target.value);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="wrapper">
