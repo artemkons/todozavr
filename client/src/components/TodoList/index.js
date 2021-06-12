@@ -7,7 +7,7 @@ import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 
 /**
- * Displays date. If deadline's year equals to current year, year isnt displayed.
+ * Displays date and time. If deadline's year equals to current year, year isnt displayed.
  * @param {string} deadline
  * @returns Component to display date.
  */
@@ -15,7 +15,7 @@ const DataBlock = ({ deadline }) => {
   let curDate = new Date();
   let date = deadline ? new Date(Number(deadline)) : null;
   let options = {
-    ...(curDate.getFullYear() === date.getFullYear() && { year: "numeric" }),
+    ...(curDate.getFullYear() !== date.getFullYear() && { year: "numeric" }),
     month: "short",
     day: "numeric",
     hour: "numeric",

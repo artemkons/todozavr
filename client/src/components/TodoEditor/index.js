@@ -46,7 +46,6 @@ const TodoEditor = () => {
     deadline.setHours(hours);
     deadline.setMinutes(minutes);
 
-    console.log(deadline);
     let newTodoQuery = `
     mutation {
       addTodo(title:"${value.title}", text:"${value.text}", deadline:"${deadline}") {
