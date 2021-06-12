@@ -5,7 +5,34 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
-import { data } from "browserslist";
+
+/**
+ * Displays date. If deadline's year equals to current year, year isnt displayed.
+ * @param {string} deadline
+ * @returns Component to display date.
+ */
+const DataBlock = ({ deadline }) => {
+  let curDate = new Date();
+  let date = deadline ? new Date(Number(deadline)) : null;
+  let options =
+    curDate.getFullYear() === date.getFullYear()
+      ? {
+          month: "short",
+          day: "numeric",
+        }
+      : {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        };
+
+  return (
+    <>
+      <FontAwesomeIcon className="svg-icon" icon={faClock} />
+      {date.toLocaleDateString("ru-RU", options)}
+    </>
+  );
+};
 
 /**
  * Creates a todo item.
@@ -52,8 +79,6 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
     );
   };
 
-  data = deadline ? new Date(Number(deadline)) : null;
-
   return (
     <div className="todo-list__item">
       <input
@@ -67,12 +92,8 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
           <h3 className="todo-list__item__title">
             {title}
             <p className="todo-list__item__time-input">
-              {data ? (
-                <FontAwesomeIcon className="svg-icon" icon={faClock} />
-              ) : (
-                ""
-              )}
-              {data ? data.toLocaleString("ru") : ""}
+              {/* FIXME: Time block */}
+              {deadline ? <DataBlock deadline={deadline} /> : ""}
             </p>
           </h3>
           <p className="todo-list__item__text">{text}</p>
