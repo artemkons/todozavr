@@ -3,11 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import TitleField from "./TitleField";
 import TextField from "./TextField";
 import Loading from "../Loading";
+import DateInput from "./DateInput";
 import useReq from "../../hooks/req.hook";
-import Calendar from "react-calendar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { Button, Modal } from "react-bulma-components";
 import "react-calendar/dist/Calendar.css";
 import "./styles/date.sass";
 
@@ -60,8 +57,6 @@ const TodoEditor = ({ todos }) => {
   const [time, setTime] = useState(defTime);
 
   const { loading, error, makeQuery, setError, setLoading } = useReq();
-
-  const [isModalActive, setIsModalActive] = useState(false);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -134,27 +129,12 @@ const TodoEditor = ({ todos }) => {
             value={value.title}
             error={error}
           />
-          {/* Date input block */}
-          <div className="date-input">
-            <input type="time" value={time} onChange={handleTime} />
-            <Button
-              onClick={() => setIsModalActive(true)}
-              size="small"
-              type="button"
-            >
-              <FontAwesomeIcon icon={faCalendarAlt} />
-            </Button>
-            <Modal show={isModalActive} onClose={() => setIsModalActive(false)}>
-              <Modal.Content>
-                <Calendar
-                  minDate={new Date()}
-                  onChange={setDate}
-                  value={date}
-                />
-              </Modal.Content>
-            </Modal>
-          </div>
-          {/* Date input block ends */}
+          <DateInput
+            time={time}
+            handleTime={handleTime}
+            date={date}
+            setDate={setDate}
+          />
           <TextField
             name="text"
             onChange={handleChange}
