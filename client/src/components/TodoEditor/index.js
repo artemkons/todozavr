@@ -12,18 +12,54 @@ import "react-calendar/dist/Calendar.css";
 import "./styles/date.sass";
 
 /**
- * Creates a todo editor window. Makes a mutation query for adding new todo and editing existing todo.
+ * Creates a todo editor window. This component uses both for adding new todo and edit existing todo.
+ * Depending on component's aim it makes one of two mutation queries: addTodo or editTodo.
+ * @param {array} Array of todos.
  * @returns Todo editor window.
  */
-const TodoEditor = () => {
-  let { id, title, text } = useParams();
-  const [value, setValue] = useState({
-    title: title ? title : "",
-    text: text ? text : "",
-  });
+const TodoEditor = ({ todos }) => {
+  let { id } = useParams();
+
+  /**
+   * Defines default values depending on component's aim (add or edit todo).
+   * @return {object} Object with default values: defValue, defDate, defTime.
+   */
+  const defineDefault = () => {
+    if (id) {
+      let todo = todos.find((e) => e.id == id);
+
+      return {
+        defValue: {
+          title: todo.title,
+          text: todo.text || "",
+        },
+        defDate: todo.deadline ? new Date(Number(todo.deadline)) : new Date(),
+        defTime: new Date(Number(todo.deadline))
+          .toLocaleDateString("ru", {
+            hour: "numeric",
+            minute: "numeric",
+          })
+          .split(" ")[1],
+      };
+    }
+
+    return {
+      defValue: {
+        title: "",
+        text: "",
+      },
+      defDate: new Date(),
+      defTime: "00:00",
+    };
+  };
+
+  let { defValue, defDate, defTime } = defineDefault();
+
+  const [value, setValue] = useState(defValue);
+  const [date, setDate] = useState(defDate);
+  const [time, setTime] = useState(defTime);
+
   const { loading, error, makeQuery, setError, setLoading } = useReq();
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState("00:00");
 
   const [isModalActive, setIsModalActive] = useState(false);
 

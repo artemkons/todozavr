@@ -31,7 +31,8 @@ const DataBlock = ({ deadline }) => {
 };
 
 /**
- * Creates a todo item.
+ * Creates a todo item. Provides following functionality: check and delete todo.
+ * Makes mutation queries: deleteTodo, doneTodo
  * @param {string} title
  * @param {string} text
  * @param {boolean} done
@@ -83,7 +84,7 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
         checked={done}
         onChange={handleCheckbox}
       ></input>
-      <Link to={`/item/${id}/${title}/${text}`} className="link">
+      <Link to={`/item/${id}`} className="link">
         <div className="todo-list__item__container">
           <h3 className="todo-list__item__title">
             {title}
@@ -112,11 +113,12 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
 };
 
 /**
- * Creates a todo list. Makes a request: allTodos.
+ * Creates a todo list. Makes a query for all todos at mounting and unmounting.
+ * @param {array} todos Todos list.
+ * @param {function} setTodos Todos state setter.
  * @returns Todo list.
  */
-const TodoList = () => {
-  const [todos, setTodos] = useState([]);
+const TodoList = ({ todos, setTodos }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
