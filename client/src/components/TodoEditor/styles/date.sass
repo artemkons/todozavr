@@ -5,9 +5,26 @@
         width: 95%
 
 .date-input
-    display: flex
-    padding-bottom: 15px
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-template-rows: 50px
+    align-items: center
+
+    &__time-block_disabled
+        display: none
+
+    &__time-block_active
+        display: block
 
 .modal-content
     display: flex
     justify-content: center
+
+.checkbox
+    &>h1
+        display: inline
+    &>input
+        margin-left: 10px
+
+h1
+    caret-color: transparent

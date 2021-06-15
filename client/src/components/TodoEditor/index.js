@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import TitleField from "./TitleField";
-import TextField from "./TextField";
 import Loading from "../Loading";
 import DateInput from "./DateInput";
 import useReq from "../../hooks/req.hook";
@@ -55,6 +53,8 @@ const TodoEditor = ({ todos }) => {
   const [value, setValue] = useState(defValue);
   const [date, setDate] = useState(defDate);
   const [time, setTime] = useState(defTime);
+
+  const [hasDeadline, setHasDeadline] = useState(false);
 
   const { loading, error, makeQuery, setError, setLoading } = useReq();
 
@@ -119,28 +119,35 @@ const TodoEditor = ({ todos }) => {
   return (
     <div className="wrapper">
       <div className="todo-editor">
-        <Link to="/" className="btn">
-          Назад
-        </Link>
         <form onSubmit={handleSubmit} className="todo-editor__form">
-          <TitleField
-            name="title"
-            onChange={handleChange}
+          <Link to="/" className="btn">
+            Назад
+          </Link>
+          <h1>Заголовок</h1>
+          <input
             value={value.title}
-            error={error}
+            onChange={handleChange}
+            name="title"
+            className={`input ${error ? " is-danger" : ""}`}
+            type="text"
+            placeholder="Почистить зубы"
           />
           <DateInput
+            hasDeadline={hasDeadline}
+            setHasDeadline={setHasDeadline}
             time={time}
             handleTime={handleTime}
             date={date}
             setDate={setDate}
           />
-          <TextField
-            name="text"
-            onChange={handleChange}
+          <h1>Комментарий</h1>
+          <textarea
             value={value.text}
-            error={error}
-          />
+            onChange={handleChange}
+            className="textarea"
+            name="text"
+            placeholder="Чистить щёткой"
+          ></textarea>
           <button className="btn">{id ? "Изменить" : " Добавить"}</button>
         </form>
       </div>
