@@ -17,7 +17,7 @@ const TodoEditor = ({ todos }) => {
 
   /**
    * Defines default values depending on component's aim (add or edit todo).
-   * @return {object} Object with default values: defValue, defDate, defTime.
+   * @return {object} Object with default values: defValue, defDate, defTime, defHasDeadline.
    */
   const defineDefault = () => {
     if (id) {
@@ -35,6 +35,7 @@ const TodoEditor = ({ todos }) => {
             minute: "numeric",
           })
           .split(" ")[1],
+        defHasDeadline: !!todo.deadline,
       };
     }
 
@@ -45,16 +46,17 @@ const TodoEditor = ({ todos }) => {
       },
       defDate: new Date(),
       defTime: "00:00",
+      defHasDeadline: false,
     };
   };
 
-  let { defValue, defDate, defTime } = defineDefault();
+  let { defValue, defDate, defTime, defHasDeadline } = defineDefault();
 
   const [value, setValue] = useState(defValue);
   const [date, setDate] = useState(defDate);
   const [time, setTime] = useState(defTime);
 
-  const [hasDeadline, setHasDeadline] = useState(false);
+  const [hasDeadline, setHasDeadline] = useState(defHasDeadline);
 
   const { loading, error, makeQuery, setError, setLoading } = useReq();
 
@@ -71,14 +73,18 @@ const TodoEditor = ({ todos }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let deadline = date;
-    let [hours, minutes] = time.split(":");
-    deadline.setHours(hours);
-    deadline.setMinutes(minutes);
+    let deadline_str = "null";
+    if (hasDeadline) {
+      deadline = date;
+      let [hours, minutes] = time.split(":");
+      deadline.setHours(hours);
+      deadline.setMinutes(minutes);
+      deadline_str = `"${deadline}"`;
+    }
 
     let newTodoQuery = `
     mutation {
-      addTodo(title:"${value.title}", text:"${value.text}", deadline:"${deadline}") {
+      addTodo(title:"${value.title}", text:"${value.text}", deadline:${deadline_str}) {
         id
       }
     }
@@ -86,7 +92,7 @@ const TodoEditor = ({ todos }) => {
 
     let editTodoQuery = `
     mutation {
-      editTodo(id:"${id}", title:"${value.title}", text:"${value.text}", deadline:"${deadline}") {
+      editTodo(id:"${id}", title:"${value.title}", text:"${value.text}", deadline:${deadline_str}) {
         id
       }
     }
