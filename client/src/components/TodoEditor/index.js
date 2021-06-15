@@ -75,7 +75,7 @@ const TodoEditor = ({ todos }) => {
 
     let deadline_str = "null";
     if (hasDeadline) {
-      deadline = date;
+      let deadline = date;
       let [hours, minutes] = time.split(":");
       deadline.setHours(hours);
       deadline.setMinutes(minutes);

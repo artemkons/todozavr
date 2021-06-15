@@ -8,6 +8,7 @@ import useReq from "../../hooks/req.hook";
 
 /**
  * Displays date and time. If deadline's year equals to current year, year isnt displayed.
+ * Displays deadline in three ways depending on time left.
  * @param {string} deadline
  * @returns Component to display date.
  */
@@ -22,11 +23,22 @@ const DataBlock = ({ deadline }) => {
     minute: "numeric",
   };
 
+  /**
+   * Check time before deadline and return corresponding class for tag.
+   * @returns {string} danger, warning or primary.
+   */
+  const checkDeadline = () => {
+    let timeLeft = new Date(Number(deadline)).getDay() - new Date().getDay();
+    if (timeLeft === 0) return "danger";
+    if (timeLeft === 1) return "warning";
+    return "primary";
+  };
+
   return (
-    <>
+    <span className={`tag is-${checkDeadline()} is-light`}>
       <FontAwesomeIcon className="svg-icon" icon={faClock} />
       {date.toLocaleDateString("ru-RU", options)}
-    </>
+    </span>
   );
 };
 
@@ -36,6 +48,7 @@ const DataBlock = ({ deadline }) => {
  * @param {string} title
  * @param {string} text
  * @param {boolean} done
+ * @param {string} deadline
  * @param {string} id
  * @param {function} setTodos
  * @returns Todo item.

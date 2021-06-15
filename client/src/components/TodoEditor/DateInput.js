@@ -4,9 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Button, Modal } from "react-bulma-components";
 
-// FIXME: Fix docs
 /**
  * Renders input form for date/time.
+ * @param {boolean} hasDeadLine
+ * @param {function} setHasDeadline
  * @param {string} time String in following format: "HH:MM".
  * @param {function} handleTime
  * @param {Date} date
@@ -24,7 +25,6 @@ const DateInput = ({
   const [isModalActive, setIsModalActive] = useState(false);
 
   const handleDeadline = (e) => {
-    console.log(e.target.checked);
     setHasDeadline(e.target.checked);
   };
 
