@@ -30,12 +30,14 @@ const TodoEditor = ({ todos }) => {
           text: todo.text || "",
         },
         defDate: todo.deadline ? new Date(Number(todo.deadline)) : new Date(),
-        defTime: new Date(Number(todo.deadline))
-          .toLocaleDateString("ru", {
-            hour: "numeric",
-            minute: "numeric",
-          })
-          .split(" ")[1],
+        defTime: todo.deadline
+          ? new Date(Number(todo.deadline))
+              .toLocaleDateString("ru", {
+                hour: "numeric",
+                minute: "numeric",
+              })
+              .split(" ")[1]
+          : "00:00",
         defHasDeadline: !!todo.deadline,
       };
     }
