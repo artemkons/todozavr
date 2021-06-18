@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
+import SortComponent from "./SortComponent";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 import { differenceInCalendarDays } from "date-fns";
@@ -172,6 +173,7 @@ const TodoList = ({ todos, setTodos }) => {
   return (
     <div className="wrapper">
       <div className="todo-list">
+        <SortComponent />
         {error ||
           todos.map((e) => (
             <TodoItem

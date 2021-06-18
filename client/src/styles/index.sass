@@ -37,10 +37,6 @@ label>h1
     display: inline
     margin-right: 0.5em
 
-input[type=checkbox]
-    width: 1rem
-    height: 1em
-
 .wrapper
     box-sizing: border-box
     width: 80%
@@ -256,3 +252,26 @@ input[type=checkbox]
 
 .tag
     margin-left: 10px
+
+.sort-menu
+    display: flex
+    align-items: center
+    margin-bottom: 0.5em
+
+    &__order-button
+        width: 1em
+        height: 1em
+        border: none
+        color: #0075ff
+
+        &:focus
+            box-shadow: none !important
+
+    &__select
+        border: none
+        background: white
+        font-size: 1em
+        color: #0075ff
+
+        &:focus
+            outline: none
