@@ -31,7 +31,7 @@ const DateInput = ({
   return (
     <div className="date-input">
       <div className="date-input__text-block">
-        <label className="checkbox">
+        <label>
           <h1>Добавить дедлайн</h1>
           <input
             type="checkbox"
@@ -45,17 +45,26 @@ const DateInput = ({
           hasDeadline ? "active" : "disabled"
         }`}
       >
-        <input type="time" value={time} onChange={handleTime} />
+        <input
+          type="time"
+          value={time}
+          onChange={handleTime}
+          className="date-input__time"
+        />
         <Button
           onClick={() => setIsModalActive(true)}
           size="small"
           type="button"
+          className="date-input__calendar-button"
         >
           <FontAwesomeIcon icon={faCalendarAlt} />
         </Button>
         <Modal show={isModalActive} onClose={() => setIsModalActive(false)}>
           <Modal.Content>
             <Calendar minDate={new Date()} onChange={setDate} value={date} />
+            <Button onClick={() => setIsModalActive(false)} className="btn">
+              Закрыть
+            </Button>
           </Modal.Content>
         </Modal>
       </div>

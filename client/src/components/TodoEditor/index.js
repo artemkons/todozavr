@@ -5,6 +5,7 @@ import DateInput from "./DateInput";
 import useReq from "../../hooks/req.hook";
 import "react-calendar/dist/Calendar.css";
 import "./styles/date.sass";
+import { Button } from "react-bulma-components";
 
 /**
  * Creates a todo editor window. This component uses both for adding new todo and edit existing todo.
@@ -154,7 +155,7 @@ const TodoEditor = ({ todos }) => {
             name="text"
             placeholder="Чистить щёткой"
           ></textarea>
-          <button className="btn">{id ? "Изменить" : " Добавить"}</button>
+          <Button className="btn">{id ? "Изменить" : " Добавить"}</Button>
         </form>
       </div>
     </div>

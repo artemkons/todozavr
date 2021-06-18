@@ -22,11 +22,7 @@ $btn-delete-color: #cc0f35
     padding: 0
 
 html
-    @media (max-width: 320px)
-        font-size: 12px
-
-    @media (min-width: 320px)
-        font-size: 16px
+    font-size: 16px
 
 body
     font: normal 300 1rem "Montserrat"
@@ -36,6 +32,14 @@ button
 
 a
     text-decoration: none
+
+label>h1
+    display: inline
+    margin-right: 0.5em
+
+input[type=checkbox]
+    width: 1rem
+    height: 1em
 
 .wrapper
     box-sizing: border-box
@@ -70,7 +74,7 @@ a
         max-width: 800px
         height: 65px
         margin-bottom: 10px
-        padding: 10px
+        padding: 0.5em
         border: 1px solid transparent
         border-radius: 20px
         box-shadow: 5px 5px 12px rgb(0 0 0 / 8%)
@@ -89,7 +93,7 @@ a
 
         &__title
             color: #0075ff
-            font: 500 1.25rem "Montserrat"
+            font: 500 1.5rem "Montserrat"
 
         &__text
             color: #595959
@@ -136,6 +140,10 @@ a
         &__loader
             margin-left: auto
 
+        &>checkbox
+            width: 1.1em
+            height: 1.1em
+
 .btn
     display: block
     height: 35px
@@ -166,8 +174,8 @@ a
         width: 60%
 
 .checkbox
-    width: 15px
-    height: 15px
+    width: 1.2em
+    height: 1.2em
     margin-right: 10px
     cursor: pointer
 
@@ -245,9 +253,6 @@ a
 
 .textarea
     height: 100%
-
-.checkbox
-    width: auto
 
 .tag
     margin-left: 10px

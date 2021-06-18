@@ -10,6 +10,17 @@
     grid-template-rows: 50px
     align-items: center
 
+    &__time
+        height: 1.5rem
+        border: 1px solid #dbdbdb
+        border-radius: 4px 0px 0px 4px
+        caret-color: transparent
+
+    &__calendar-button
+        width: 1.5rem
+        height: 1.5rem
+        border-radius: 0px 4px 4px 0px !important
+
     &__time-block_disabled
         display: none
 
@@ -18,7 +29,8 @@
 
 .modal-content
     display: flex
-    justify-content: center
+    flex-direction: column
+    align-items: center
 
 .checkbox
     &>h1
