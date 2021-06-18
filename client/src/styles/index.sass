@@ -3,6 +3,8 @@ $secondColor: #f7ea00
 $thirdColor: #e48900
 $accentColor: #be0000
 
+$btn-delete-color: #cc0f35
+
 @font-face
     font-family: "Montserrat"
     src: url(./Montserrat-Medium.ttf)
@@ -61,15 +63,14 @@ a
     overflow-y: scroll
 
     &__item
-        display: flex
-        justify-content: flex-start
+        display: grid
+        grid-template-columns: 30px 6fr 2fr 30px
         align-items: center
-        flex-wrap: nowrap
         width: 90%
         max-width: 800px
         height: 65px
         margin-bottom: 10px
-        padding: 5px
+        padding: 10px
         border: 1px solid transparent
         border-radius: 20px
         box-shadow: 5px 5px 12px rgb(0 0 0 / 8%)
@@ -81,14 +82,12 @@ a
             cursor: pointer
 
         &:hover &__btn-delete
-            border-color: red
+            border-color: $btn-delete-color
 
             &__svg
-                fill: red
+                fill: $btn-delete-color
 
         &__title
-            display: flex
-            align-items: baseline
             color: #0075ff
             font: 500 1.25rem "Montserrat"
 
@@ -104,6 +103,7 @@ a
             display: flex
             justify-content: center
             align-content: center
+            grid-column: 4/5
             margin-left: auto
             padding: 5px
             border: 1px solid transparent
@@ -112,11 +112,17 @@ a
             cursor: pointer
             transition: all .5s ease-out
 
+            @media (max-width: 425px)
+                border: 1px solid $btn-delete-color
+
             &__svg
                 fill: transparent
 
+                @media (max-width: 425px)
+                    fill: $btn-delete-color
+
             &:hover
-                background-color: red
+                background-color: $btn-delete-color
 
                 .todo-list__item__btn-delete__svg
                     fill: #fff

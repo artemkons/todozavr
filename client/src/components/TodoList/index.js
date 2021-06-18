@@ -5,6 +5,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
+import { differenceInCalendarDays } from "date-fns";
 
 /**
  * Displays date and time. If deadline's year equals to current year, year isnt displayed.
@@ -28,9 +29,12 @@ const DataBlock = ({ deadline }) => {
    * @returns {string} danger, warning or primary.
    */
   const checkDeadline = () => {
-    let timeLeft = new Date(Number(deadline)).getDay() - new Date().getDay();
-    if (timeLeft === 0) return "danger";
-    if (timeLeft === 1) return "warning";
+    let todayDate = new Date(Number(deadline));
+    let deadlineDate = new Date();
+    let timeLeft = differenceInCalendarDays(todayDate, deadlineDate);
+
+    if (timeLeft < 0) return "danger";
+    if (timeLeft <= 1 && timeLeft >= 0) return "warning";
     return "primary";
   };
 
@@ -99,15 +103,11 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
       ></input>
       <Link to={`/item/${id}`} className="link">
         <div className="todo-list__item__container">
-          <h3 className="todo-list__item__title">
-            {title}
-            <p className="todo-list__item__time-input">
-              {deadline ? <DataBlock deadline={deadline} /> : ""}
-            </p>
-          </h3>
+          <h3 className="todo-list__item__title">{title}</h3>
           <p className="todo-list__item__text">{text}</p>
         </div>
       </Link>
+      {deadline ? <DataBlock deadline={deadline} /> : ""}
       {loading ? (
         <div className="todo-list__item__loader">Loading...</div>
       ) : (
