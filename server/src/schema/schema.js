@@ -9,9 +9,16 @@ var schema = buildSchema(`
     deadline: String
   }
 
+  type Sort {
+    id: ID!
+    order: Int!,
+    parameter: String!
+  }
+
   type Query {
     todo(id: ID!): Todo
     allTodos: [Todo!]!
+    getSort: Sort!
   }
 
   type Mutation {
@@ -19,6 +26,7 @@ var schema = buildSchema(`
     deleteTodo(id: ID!): [Todo]
     editTodo(id: ID!, title: String!, text: String!, deadline: String): Todo!
     doneTodo(id: ID!): Todo! 
+    setSort(order: Int, parameter: String): Sort!
   }
 `);
 
