@@ -87,7 +87,9 @@ const TodoEditor = ({ todos }) => {
 
     let newTodoQuery = `
     mutation {
-      addTodo(title:"${value.title}", text:"${value.text}", deadline:${deadline_str}) {
+      addTodo(title:"${value.title.trim()}", text:"${
+      value.text
+    }", deadline:${deadline_str}) {
         id
       }
     }
@@ -95,7 +97,9 @@ const TodoEditor = ({ todos }) => {
 
     let editTodoQuery = `
     mutation {
-      editTodo(id:"${id}", title:"${value.title}", text:"${value.text}", deadline:${deadline_str}) {
+      editTodo(id:"${id}", title:"${value.title.trim()}", text:"${
+      value.text
+    }", deadline:${deadline_str}) {
         id
       }
     }

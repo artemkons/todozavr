@@ -192,6 +192,26 @@ const TodoList = ({ todos, setTodos }) => {
     if (response) setSort(response.data.getSort);
   }, [response]);
 
+  /**
+   *
+   * @param {Integer} order
+   * @param {String} parameter It may be: "deadline", "done" or "title"
+   */
+  const sortTodos = (order, parameter) => {
+    if (parameter == "title") {
+      todos.sort((a, b) => {
+        if (a[parameter] > b[parameter]) return 1;
+        if (a[parameter] < b[parameter]) return -1;
+        return 0;
+      });
+    } else {
+      todos.sort((a, b) => {
+        return b[parameter] - a[parameter];
+      });
+    }
+  };
+  sortTodos(0, sort.parameter);
+
   if (loading) return <Loading />;
 
   return (
