@@ -9,12 +9,11 @@ const useReq = () => {
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
 
-  // TODO: Write about callback
   /**
    * Makes a response to api. Modulates Loading, Error and Response values.
    * @param {string} query
-   * @param {string} url
-   * @param {function} callback
+   * @param {function} callback Uses to update some state. Isn't necessary.
+   * @param {string} url Equals to "api" by default.
    */
   const makeQuery = async (query, callback, url = "api") => {
     setLoading(true);
