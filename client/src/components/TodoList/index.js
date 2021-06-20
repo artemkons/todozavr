@@ -59,25 +59,23 @@ const DataBlock = ({ deadline }) => {
  * @returns Todo item.
  */
 const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
-  const { loading, makeQuery } = useReq();
+  const [makeMutation, , { loading }] = useReq();
 
   const handleDelete = async (e) => {
-    let query = `
+    let mutation = `
     mutation {
       deleteTodo(id:"${id}") {
         id
-        title
-        text
       }
     }
     `;
 
-    makeQuery(query);
+    makeMutation(mutation);
     setTodos((prev) => prev.filter((el) => el.id != id));
   };
 
   const handleCheckbox = async (e) => {
-    let query = `
+    let mutation = `
     mutation {
       doneTodo(id:"${id}") {
         title
@@ -85,7 +83,7 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
     }
     `;
 
-    makeQuery(query);
+    makeMutation(mutation);
     setTodos((prev) =>
       prev.map((el) => {
         if (el.id === id) el.done = !el.done;
@@ -127,20 +125,19 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
 };
 
 /**
- * Creates a todo list. Makes following queries: for all todos during the mounting and unmounting,
- * for sorting if todos change.
+ * Creates a todo list. Makes following queries: query - allTodos and
+ * getSorting during the mounting and unmounting.
  * @param {array} todos Todos list.
  * @param {function} setTodos Todos state setter.
  * @returns Todo list.
  */
 const TodoList = ({ todos, setTodos }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [sort, setSort] = useState({
     order: 0,
     parameter: "done",
   });
-  const { response, makeQuery } = useReq();
+  const [fetchSort, ,] = useReq();
+  const [fetchTodos, , { loading, error }] = useReq();
 
   useEffect(() => {
     let query = `
@@ -153,25 +150,12 @@ const TodoList = ({ todos, setTodos }) => {
         deadline
       }
     }
-  `;
-    const fetchTodos = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("/api", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ query: query }),
-        });
-        const result = await response.json();
-        setTodos(result.data.allTodos);
-      } catch (error) {
-        setError("Упс... Что-то пошло не так");
-      }
-      setLoading(false);
+    `;
+
+    let setFetchedTodos = (result) => {
+      setTodos(result.data.allTodos);
     };
-    fetchTodos();
+    fetchTodos(query, setFetchedTodos);
   }, []);
 
   useEffect(() => {
@@ -184,13 +168,12 @@ const TodoList = ({ todos, setTodos }) => {
     }
     `;
 
-    makeQuery(query);
-  }, [todos]);
+    let setSortReq = (result) => {
+      setSort(result.data.getSort);
+    };
 
-  // TODO: Не очень круто
-  useEffect(() => {
-    if (response) setSort(response.data.getSort);
-  }, [response]);
+    fetchSort(query, setSortReq);
+  }, []);
 
   /**
    * Sort todos depending on order and parameter

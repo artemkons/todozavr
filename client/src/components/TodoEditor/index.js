@@ -9,7 +9,7 @@ import { Button } from "react-bulma-components";
 
 /**
  * Creates a todo editor window. This component uses both for adding new todo and edit existing todo.
- * Depending on component's aim it makes one of two mutation queries: addTodo or editTodo.
+ * Depending on component's aim component makes one of following queries: mutation - addTodo or editTodo.
  * @param {array} Array of todos.
  * @returns Todo editor window.
  */
@@ -61,7 +61,7 @@ const TodoEditor = ({ todos }) => {
 
   const [hasDeadline, setHasDeadline] = useState(defHasDeadline);
 
-  const { loading, error, makeQuery, setError, setLoading } = useReq();
+  const [makeMutation, , { loading, error, setLoading, setError }] = useReq();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -111,12 +111,11 @@ const TodoEditor = ({ todos }) => {
       return;
     }
 
+    makeMutation(id ? editTodoQuery : newTodoQuery);
     if (id) {
-      await makeQuery(editTodoQuery, "");
       return;
     }
 
-    await makeQuery(newTodoQuery);
     setValue({
       title: "",
       text: "",

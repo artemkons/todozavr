@@ -9,12 +9,14 @@ const useReq = () => {
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
 
+  // TODO: Write about callback
   /**
    * Makes a response to api. Modulates Loading, Error and Response values.
    * @param {string} query
    * @param {string} url
+   * @param {function} callback
    */
-  const makeQuery = async (query, url = "api") => {
+  const makeQuery = async (query, callback, url = "api") => {
     setLoading(true);
     setError(null);
     try {
@@ -27,14 +29,15 @@ const useReq = () => {
       });
 
       let result = await response.json();
-      setResponse(result);
+      if (callback) callback(result);
+      else setResponse(result);
     } catch (error) {
       setError("Что-то пошло не так, попробуйте позже!");
     }
     setLoading(false);
   };
 
-  return { loading, error, response, makeQuery, setError, setLoading };
+  return [makeQuery, response, { loading, error, setLoading, setError }];
 };
 
 export default useReq;

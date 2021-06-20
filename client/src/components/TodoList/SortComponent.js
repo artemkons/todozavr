@@ -9,18 +9,19 @@ import {
 
 /**
  * Render sort menu, which consist of text and two buttons: order, parameter.
+ * Makes following queries: mutation - setSort.
  * @param {Integer} order It may be 0(descending) or 1(ascending).
  * @param {String} parameter Which is used for sorting.
  * @param {Function} setSort
  * @returns Sort menu.
  */
 const SortComponent = ({ order, parameter, setSort }) => {
-  const { makeQuery } = useReq();
+  const [makeMutation, ,] = useReq();
 
   const handleSelect = (e) => {
     let newPar = e.target.value;
 
-    let query = `
+    let mutation = `
     mutation {
       setSort(parameter: "${newPar}") {
         id
@@ -28,7 +29,7 @@ const SortComponent = ({ order, parameter, setSort }) => {
     }
     `;
 
-    makeQuery(query);
+    makeMutation(mutation);
     setSort((prev) => ({
       ...prev,
       parameter: newPar,
@@ -38,7 +39,7 @@ const SortComponent = ({ order, parameter, setSort }) => {
   const handleOrderButton = () => {
     let newOrder = order === 0 ? 1 : 0;
 
-    let query = `
+    let mutation = `
     mutation {
       setSort(order:${newOrder}) {
         id
@@ -46,7 +47,7 @@ const SortComponent = ({ order, parameter, setSort }) => {
     }
     `;
 
-    makeQuery(query);
+    makeMutation(mutation);
     setSort((prev) => ({
       ...prev,
       order: newOrder,
