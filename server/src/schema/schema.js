@@ -27,6 +27,8 @@ var schema = buildSchema(`
     editTodo(id: ID!, title: String!, text: String!, deadline: String): Todo!
     doneTodo(id: ID!): Todo! 
     setSort(order: Int, parameter: String): Sort!
+    unchekAllChecked: [Todo]
+    deleteAllChecked: [Todo]
   }
 `);
 

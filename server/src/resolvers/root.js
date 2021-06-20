@@ -36,6 +36,12 @@ var root = {
     sort.parameter = parameter || sort.parameter;
     return await sort.save();
   },
+  unchekAllChecked: async () => {
+    return await Todos.updateMany({ done: true }, { done: false });
+  },
+  deleteAllChecked: async () => {
+    return await Todos.deleteMany({ done: true });
+  },
 };
 
 export default root;
