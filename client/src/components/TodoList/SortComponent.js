@@ -4,19 +4,18 @@ import { Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSortAmountUp,
-  faSortAmountDown,
+  faSortAmountDownAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-// TODO: Дописать доку
 /**
  * Render sort menu, which consist of text and two buttons: order, parameter.
- * @param {Integer} order
- * @param {String} parameter
+ * @param {Integer} order It may be 0(descending) or 1(ascending).
+ * @param {String} parameter Which is used for sorting.
  * @param {Function} setSort
  * @returns Sort menu.
  */
 const SortComponent = ({ order, parameter, setSort }) => {
-  const { response, makeQuery } = useReq();
+  const { makeQuery } = useReq();
 
   const handleSelect = (e) => {
     let newPar = e.target.value;
@@ -60,12 +59,12 @@ const SortComponent = ({ order, parameter, setSort }) => {
         {order === 1 ? (
           <FontAwesomeIcon icon={faSortAmountUp} />
         ) : (
-          <FontAwesomeIcon icon={faSortAmountDown} />
+          <FontAwesomeIcon icon={faSortAmountDownAlt} />
         )}
       </Button>
       Сортировать по
       <select
-        defaultValue={parameter}
+        value={parameter}
         onChange={handleSelect}
         className="sort-menu__select"
       >

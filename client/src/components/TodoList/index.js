@@ -49,7 +49,7 @@ const DataBlock = ({ deadline }) => {
 
 /**
  * Creates a todo item. Provides following functionality: check and delete todo.
- * Makes mutation queries: deleteTodo, doneTodo
+ * Makes mutation queries: deleteTodo, doneTodo.
  * @param {string} title
  * @param {string} text
  * @param {boolean} done
@@ -127,7 +127,8 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
 };
 
 /**
- * Creates a todo list. Makes a query for all todos at mounting and unmounting.
+ * Creates a todo list. Makes following queries: for all todos during the mounting and unmounting,
+ * for sorting if todos change.
  * @param {array} todos Todos list.
  * @param {function} setTodos Todos state setter.
  * @returns Todo list.
@@ -173,7 +174,6 @@ const TodoList = ({ todos, setTodos }) => {
     fetchTodos();
   }, []);
 
-  // Получаем данные о сортировке
   useEffect(() => {
     let query = `
     query {
@@ -193,24 +193,44 @@ const TodoList = ({ todos, setTodos }) => {
   }, [response]);
 
   /**
-   *
-   * @param {Integer} order
-   * @param {String} parameter It may be: "deadline", "done" or "title"
+   * Sort todos depending on order and parameter
+   * @param {Integer} order Iy may be: 0(descending) or 1(ascending).
+   * @param {String} parameter It may be: "deadline", "done" or "title".
    */
   const sortTodos = (order, parameter) => {
-    if (parameter == "title") {
-      todos.sort((a, b) => {
-        if (a[parameter] > b[parameter]) return 1;
-        if (a[parameter] < b[parameter]) return -1;
+    let mnoj = order ? -1 : 1;
+    let sortFunc;
+
+    sortFunc = (a, b) => {
+      let firstEl = a[parameter];
+      let secondEl = b[parameter];
+      if (typeof a === "String" && typeof a === "String") {
+        firstEl = firstEl.toLowerCase();
+        secondEl = secondEl.toLowerCase();
+      }
+      if (firstEl > secondEl) return 1 * mnoj;
+      if (firstEl < secondEl) return -1 * mnoj;
+      return 0;
+    };
+
+    if (parameter === "deadline") {
+      sortFunc = (a, b) => {
+        let firstEl = a[parameter];
+        let secondEl = b[parameter];
+        if (!order) {
+          firstEl = firstEl || Infinity;
+          secondEl = secondEl || Infinity;
+        }
+        if (firstEl > secondEl) return 1 * mnoj;
+        if (firstEl < secondEl) return -1 * mnoj;
         return 0;
-      });
-    } else {
-      todos.sort((a, b) => {
-        return b[parameter] - a[parameter];
-      });
+      };
     }
+
+    todos.sort(sortFunc);
   };
-  sortTodos(0, sort.parameter);
+
+  sortTodos(sort.order, sort.parameter);
 
   if (loading) return <Loading />;
 
