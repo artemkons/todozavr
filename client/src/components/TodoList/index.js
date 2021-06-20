@@ -135,6 +135,11 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
 const TodoList = ({ todos, setTodos }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [sort, setSort] = useState({
+    order: 0,
+    parameter: "done",
+  });
+  const { response, makeQuery } = useReq();
 
   useEffect(() => {
     let query = `
@@ -168,12 +173,35 @@ const TodoList = ({ todos, setTodos }) => {
     fetchTodos();
   }, []);
 
+  // Получаем данные о сортировке
+  useEffect(() => {
+    let query = `
+    query {
+      getSort {
+        order
+        parameter
+      }
+    }
+    `;
+
+    makeQuery(query);
+  }, [todos]);
+
+  // TODO: Не очень круто
+  useEffect(() => {
+    if (response) setSort(response.data.getSort);
+  }, [response]);
+
   if (loading) return <Loading />;
 
   return (
     <div className="wrapper">
       <div className="todo-list">
-        <SortComponent />
+        <SortComponent
+          order={sort.order}
+          parameter={sort.parameter}
+          setSort={setSort}
+        />
         {error ||
           todos.map((e) => (
             <TodoItem

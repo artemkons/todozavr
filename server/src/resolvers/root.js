@@ -32,7 +32,7 @@ var root = {
   },
   setSort: async ({ order, parameter }) => {
     let sort = await Sort.findOne();
-    sort.order = order || sort.order;
+    sort.order = order != null ? order : sort.order;
     sort.parameter = parameter || sort.parameter;
     return await sort.save();
   },
