@@ -24,7 +24,7 @@ const SortComponent = ({ order, parameter, setSort }) => {
     let mutation = `
     mutation {
       setSort(parameter: "${newPar}") {
-        id
+        __typename
       }
     }
     `;
@@ -42,7 +42,7 @@ const SortComponent = ({ order, parameter, setSort }) => {
     let mutation = `
     mutation {
       setSort(order:${newOrder}) {
-        id
+        __typename
       }
     }
     `;
