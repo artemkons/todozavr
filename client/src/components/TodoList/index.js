@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClock,
+  faTrash,
+  faCheckSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
 import SortComponent from "./SortComponent";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 import { differenceInCalendarDays } from "date-fns";
+import { Button } from "react-bulma-components";
 
 /**
  * Displays date and time. If deadline's year equals to current year, year isnt displayed.
@@ -238,9 +243,20 @@ const TodoList = ({ todos, setTodos }) => {
             />
           ))}
       </div>
-      <Link to="/new" className="btn">
-        Добавить
-      </Link>
+      <div className="todo-list__button-section ">
+        <Button className="todo-list__button-section__button todo-list__button-section__button_left">
+          <FontAwesomeIcon icon={faTrash} />
+        </Button>
+        <Link
+          to="/new"
+          className="todo-list__button-section__button todo-list__button-section__main-button"
+        >
+          Добавить
+        </Link>
+        <Button className="todo-list__button-section__button todo-list__button-section__button_right">
+          <FontAwesomeIcon icon={faCheckSquare} />
+        </Button>
+      </div>
     </div>
   );
 };
