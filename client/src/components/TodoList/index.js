@@ -131,7 +131,7 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
 
 /**
  * Creates a todo list. Makes following queries: query - allTodos and
- * getSorting during the mounting and unmounting.
+ * getSorting during the mounting and unmounting, mutation - unchekAllChecked, deleteAllChecked.
  * @param {array} todos Todos list.
  * @param {function} setTodos Todos state setter.
  * @returns Todo list.
@@ -141,8 +141,13 @@ const TodoList = ({ todos, setTodos }) => {
     order: 0,
     parameter: "done",
   });
-  const [fetchSort, ,] = useReq();
-  const [fetchTodos, , { loading, error }] = useReq();
+
+  // FIXME: Может лучше всё через один вызов?
+  // const [fetchSort, ,] = useReq();
+  // const [fetchTodos, , { loading, error }] = useReq();
+  // const [makeRes, ,] = useReq();
+
+  const [makeReq, , { loading, error }] = useReq();
 
   useEffect(() => {
     let query = `
@@ -160,7 +165,7 @@ const TodoList = ({ todos, setTodos }) => {
     let setFetchedTodos = (result) => {
       setTodos(result.data.allTodos);
     };
-    fetchTodos(query, setFetchedTodos);
+    makeReq(query, setFetchedTodos);
   }, []);
 
   useEffect(() => {
@@ -176,9 +181,41 @@ const TodoList = ({ todos, setTodos }) => {
     let setSortReq = (result) => {
       setSort(result.data.getSort);
     };
-
-    fetchSort(query, setSortReq);
+    makeReq(query, setSortReq);
   }, []);
+
+  const handleGroupUncheck = () => {
+    let query = `
+    mutation {
+      unchekAllChecked {
+        __typename
+      }
+    }
+    `;
+
+    makeReq(query);
+    setTodos((prev) =>
+      prev.map((e) => {
+        if (e.done) e.done = false;
+        return e;
+      })
+    );
+  };
+
+  const handleGroupDelete = () => {
+    let query = `
+    mutation {
+      deleteAllChecked {
+        __typename
+      }
+    }
+    `;
+
+    makeReq(query);
+    setTodos((prev) => {
+      return prev.filter((e) => (e.done ? false : true));
+    });
+  };
 
   /**
    * Sort todos depending on order and parameter
@@ -244,7 +281,10 @@ const TodoList = ({ todos, setTodos }) => {
           ))}
       </div>
       <div className="todo-list__button-section ">
-        <Button className="todo-list__button-section__button todo-list__button-section__button_left">
+        <Button
+          onClick={handleGroupDelete}
+          className="todo-list__button-section__button todo-list__button-section__button_left"
+        >
           <FontAwesomeIcon icon={faTrash} />
         </Button>
         <Link
@@ -253,7 +293,10 @@ const TodoList = ({ todos, setTodos }) => {
         >
           Добавить
         </Link>
-        <Button className="todo-list__button-section__button todo-list__button-section__button_right">
+        <Button
+          onClick={handleGroupUncheck}
+          className="todo-list__button-section__button todo-list__button-section__button_right"
+        >
           <FontAwesomeIcon icon={faCheckSquare} />
         </Button>
       </div>
