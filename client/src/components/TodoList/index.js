@@ -142,11 +142,6 @@ const TodoList = ({ todos, setTodos }) => {
     parameter: "done",
   });
 
-  // FIXME: Может лучше всё через один вызов?
-  // const [fetchSort, ,] = useReq();
-  // const [fetchTodos, , { loading, error }] = useReq();
-  // const [makeRes, ,] = useReq();
-
   const [makeReq, , { loading, error }] = useReq();
 
   useEffect(() => {
