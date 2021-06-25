@@ -45,7 +45,7 @@ const DataBlock = ({ deadline }) => {
   };
 
   return (
-    <span className={`tag is-${checkDeadline()} is-light`}>
+    <span className={`tag is-${checkDeadline()} is-light data-block__time-tag`}>
       <FontAwesomeIcon className="svg-icon" icon={faClock} />
       {date.toLocaleDateString("ru-RU", options)}
     </span>
@@ -98,7 +98,11 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
   };
 
   return (
-    <div className="todo-list__item">
+    <div
+      className={`todo-list__item ${
+        deadline ? "" : "todo-list__item_no-timetag"
+      }`}
+    >
       <input
         type="checkbox"
         className="checkbox"
@@ -106,10 +110,8 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
         onChange={handleCheckbox}
       ></input>
       <Link to={`/item/${id}`} className="link">
-        <div className="todo-list__item__container">
-          <h3 className="todo-list__item__title">{title}</h3>
-          <p className="todo-list__item__text">{text}</p>
-        </div>
+        <h3 className="todo-list__item__title">{title}</h3>
+        <p className="todo-list__item__text">{text}</p>
       </Link>
       {deadline ? <DataBlock deadline={deadline} /> : ""}
       {loading ? (

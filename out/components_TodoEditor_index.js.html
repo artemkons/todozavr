@@ -28,22 +28,68 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import TitleField from "./TitleField";
-import TextField from "./TextField";
 import Loading from "../Loading";
+import DateInput from "./DateInput";
 import useReq from "../../hooks/req.hook";
+import "react-calendar/dist/Calendar.css";
+import "./styles/date.sass";
+import { Button } from "react-bulma-components";
 
 /**
- * Creates a todo editor window.
+ * Creates a todo editor window. This component uses both for adding new todo and edit existing todo.
+ * Depending on component's aim component makes one of following queries: mutation - addTodo or editTodo.
+ * @param {array} Array of todos.
  * @returns Todo editor window.
  */
-const TodoEditor = () => {
-  let { id, title, text } = useParams();
-  const [value, setValue] = useState({
-    title: title ? title : "",
-    text: text ? text : "",
-  });
-  const { loading, error, makeQuery, setError, setLoading } = useReq();
+const TodoEditor = ({ todos }) => {
+  let { id } = useParams();
+
+  /**
+   * Defines default values depending on component's aim (add or edit todo).
+   * @return {object} Object with default values: defValue, defDate, defTime, defHasDeadline.
+   */
+  const defineDefault = () => {
+    if (id) {
+      let todo = todos.find((e) => e.id == id);
+
+      return {
+        defValue: {
+          title: todo.title,
+          text: todo.text || "",
+        },
+        defDate: todo.deadline ? new Date(Number(todo.deadline)) : new Date(),
+        defTime: todo.deadline
+          ? new Date(Number(todo.deadline))
+              .toLocaleDateString("ru", {
+                hour: "numeric",
+                minute: "numeric",
+              })
+              .split(" ")[1]
+          : "00:00",
+        defHasDeadline: !!todo.deadline,
+      };
+    }
+
+    return {
+      defValue: {
+        title: "",
+        text: "",
+      },
+      defDate: new Date(),
+      defTime: "00:00",
+      defHasDeadline: false,
+    };
+  };
+
+  let { defValue, defDate, defTime, defHasDeadline } = defineDefault();
+
+  const [value, setValue] = useState(defValue);
+  const [date, setDate] = useState(defDate);
+  const [time, setTime] = useState(defTime);
+
+  const [hasDeadline, setHasDeadline] = useState(defHasDeadline);
+
+  const [makeMutation, , { loading, error, setLoading, setError }] = useReq();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -58,9 +104,20 @@ const TodoEditor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let deadline_str = "null";
+    if (hasDeadline) {
+      let deadline = date;
+      let [hours, minutes] = time.split(":");
+      deadline.setHours(hours);
+      deadline.setMinutes(minutes);
+      deadline_str = `"${deadline}"`;
+    }
+
     let newTodoQuery = `
     mutation {
-      addTodo(title:"${value.title}", text:"${value.text}") {
+      addTodo(title:"${value.title.trim()}", text:"${
+      value.text
+    }", deadline:${deadline_str}) {
         id
       }
     }
@@ -68,7 +125,9 @@ const TodoEditor = () => {
 
     let editTodoQuery = `
     mutation {
-      editTodo(id:"${id}", title:"${value.title}", text:"${value.text}") {
+      editTodo(id:"${id}", title:"${value.title.trim()}", text:"${
+      value.text
+    }", deadline:${deadline_str}) {
         id
       }
     }
@@ -80,16 +139,19 @@ const TodoEditor = () => {
       return;
     }
 
+    makeMutation(id ? editTodoQuery : newTodoQuery);
     if (id) {
-      await makeQuery(editTodoQuery, "");
       return;
     }
 
-    await makeQuery(newTodoQuery);
     setValue({
       title: "",
       text: "",
     });
+  };
+
+  let handleTime = (e) => {
+    setTime(e.target.value);
   };
 
   if (loading) return &lt;Loading />;
@@ -97,23 +159,36 @@ const TodoEditor = () => {
   return (
     &lt;div className="wrapper">
       &lt;div className="todo-editor">
-        &lt;Link to="/" className="btn">
-          Назад
-        &lt;/Link>
         &lt;form onSubmit={handleSubmit} className="todo-editor__form">
-          &lt;TitleField
-            name="title"
-            onChange={handleChange}
+          &lt;Link to="/" className="btn">
+            Назад
+          &lt;/Link>
+          &lt;h1>Заголовок&lt;/h1>
+          &lt;input
             value={value.title}
-            error={error}
-          />
-          &lt;TextField
-            name="text"
             onChange={handleChange}
-            value={value.text}
-            error={error}
+            name="title"
+            className={`input ${error ? " is-danger" : ""}`}
+            type="text"
+            placeholder="Почистить зубы"
           />
-          &lt;button className="btn">{id ? "Изменить" : " Добавить"}&lt;/button>
+          &lt;DateInput
+            hasDeadline={hasDeadline}
+            setHasDeadline={setHasDeadline}
+            time={time}
+            handleTime={handleTime}
+            date={date}
+            setDate={setDate}
+          />
+          &lt;h1>Комментарий&lt;/h1>
+          &lt;textarea
+            value={value.text}
+            onChange={handleChange}
+            className="textarea"
+            name="text"
+            placeholder="Чистить щёткой"
+          >&lt;/textarea>
+          &lt;Button className="btn">{id ? "Изменить" : " Добавить"}&lt;/Button>
         &lt;/form>
       &lt;/div>
     &lt;/div>
@@ -131,13 +206,13 @@ export default TodoEditor;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#TodoEditor">TodoEditor</a></li><li><a href="global.html#TodoItem">TodoItem</a></li><li><a href="global.html#TodoList">TodoList</a></li><li><a href="global.html#useReq">useReq</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#DataBlock">DataBlock</a></li><li><a href="global.html#DateInput">DateInput</a></li><li><a href="global.html#SortComponent">SortComponent</a></li><li><a href="global.html#TodoEditor">TodoEditor</a></li><li><a href="global.html#TodoItem">TodoItem</a></li><li><a href="global.html#TodoList">TodoList</a></li><li><a href="global.html#useReq">useReq</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun May 30 2021 17:01:34 GMT+0300 (Москва, стандартное время)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Thu Jun 24 2021 12:25:00 GMT+0300 (Moscow Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

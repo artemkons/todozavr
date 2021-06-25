@@ -28,39 +28,87 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faClock,
+  faTrash,
+  faCheckSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
+import SortComponent from "./SortComponent";
 import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
+import { differenceInCalendarDays } from "date-fns";
+import { Button } from "react-bulma-components";
 
 /**
- * Creates a todo item.
+ * Displays date and time. If deadline's year equals to current year, year isnt displayed.
+ * Displays deadline in three ways depending on time left.
+ * @param {string} deadline
+ * @returns Component to display date.
+ */
+const DataBlock = ({ deadline }) => {
+  let curDate = new Date();
+  let date = deadline ? new Date(Number(deadline)) : null;
+  let options = {
+    ...(curDate.getFullYear() !== date.getFullYear() &amp;&amp; { year: "numeric" }),
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+
+  /**
+   * Check time before deadline and return corresponding class for tag.
+   * @returns {string} danger, warning or primary.
+   */
+  const checkDeadline = () => {
+    let todayDate = new Date(Number(deadline));
+    let deadlineDate = new Date();
+    let timeLeft = differenceInCalendarDays(todayDate, deadlineDate);
+
+    if (timeLeft &lt; 0) return "danger";
+    if (timeLeft &lt;= 1 &amp;&amp; timeLeft >= 0) return "warning";
+    return "primary";
+  };
+
+  return (
+    &lt;span className={`tag is-${checkDeadline()} is-light`}>
+      &lt;FontAwesomeIcon className="svg-icon" icon={faClock} />
+      {date.toLocaleDateString("ru-RU", options)}
+    &lt;/span>
+  );
+};
+
+/**
+ * Creates a todo item. Provides following functionality: check and delete todo.
+ * Makes mutation queries: deleteTodo, doneTodo.
  * @param {string} title
  * @param {string} text
  * @param {boolean} done
+ * @param {string} deadline
  * @param {string} id
  * @param {function} setTodos
  * @returns Todo item.
  */
-const TodoItem = ({ title, text, done, id, setTodos }) => {
-  const { loading, makeQuery } = useReq();
+const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
+  const [makeMutation, , { loading }] = useReq();
 
   const handleDelete = async (e) => {
-    let query = `
+    let mutation = `
     mutation {
       deleteTodo(id:"${id}") {
         id
-        title
-        text
       }
     }
     `;
 
-    makeQuery(query);
+    makeMutation(mutation);
     setTodos((prev) => prev.filter((el) => el.id != id));
   };
 
   const handleCheckbox = async (e) => {
-    let query = `
+    let mutation = `
     mutation {
       doneTodo(id:"${id}") {
         title
@@ -68,7 +116,7 @@ const TodoItem = ({ title, text, done, id, setTodos }) => {
     }
     `;
 
-    makeQuery(query);
+    makeMutation(mutation);
     setTodos((prev) =>
       prev.map((el) => {
         if (el.id === id) el.done = !el.done;
@@ -85,12 +133,13 @@ const TodoItem = ({ title, text, done, id, setTodos }) => {
         checked={done}
         onChange={handleCheckbox}
       >&lt;/input>
-      &lt;Link to={`/item/${id}/${title}/${text}`} className="link">
+      &lt;Link to={`/item/${id}`} className="link">
         &lt;div className="todo-list__item__container">
           &lt;h3 className="todo-list__item__title">{title}&lt;/h3>
           &lt;p className="todo-list__item__text">{text}&lt;/p>
         &lt;/div>
       &lt;/Link>
+      {deadline ? &lt;DataBlock deadline={deadline} /> : ""}
       {loading ? (
         &lt;div className="todo-list__item__loader">Loading...&lt;/div>
       ) : (
@@ -109,13 +158,19 @@ const TodoItem = ({ title, text, done, id, setTodos }) => {
 };
 
 /**
- * Creates a todo list.
+ * Creates a todo list. Makes following queries: query - allTodos and
+ * getSorting during the mounting and unmounting, mutation - unchekAllChecked, deleteAllChecked.
+ * @param {array} todos Todos list.
+ * @param {function} setTodos Todos state setter.
  * @returns Todo list.
  */
-const TodoList = () => {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const TodoList = ({ todos, setTodos }) => {
+  const [sort, setSort] = useState({
+    order: 0,
+    parameter: "done",
+  });
+
+  const [makeReq, , { loading, error }] = useReq();
 
   useEffect(() => {
     let query = `
@@ -125,49 +180,149 @@ const TodoList = () => {
         title
         text
         done
+        deadline
       }
     }
-  `;
-    const fetchTodos = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("/api", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ query: query }),
-        });
-        const result = await response.json();
-        setTodos(result.data.allTodos);
-      } catch (error) {
-        setError("Упс... Что-то пошло не так!");
-      }
-      setLoading(false);
+    `;
+
+    let setFetchedTodos = (result) => {
+      setTodos(result.data.allTodos);
     };
-    fetchTodos();
+    makeReq(query, setFetchedTodos);
   }, []);
+
+  useEffect(() => {
+    let query = `
+    query {
+      getSort {
+        order
+        parameter
+      }
+    }
+    `;
+
+    let setSortReq = (result) => {
+      setSort(result.data.getSort);
+    };
+    makeReq(query, setSortReq);
+  }, []);
+
+  const handleGroupUncheck = () => {
+    let query = `
+    mutation {
+      unchekAllChecked {
+        __typename
+      }
+    }
+    `;
+
+    makeReq(query);
+    setTodos((prev) =>
+      prev.map((e) => {
+        if (e.done) e.done = false;
+        return e;
+      })
+    );
+  };
+
+  const handleGroupDelete = () => {
+    let query = `
+    mutation {
+      deleteAllChecked {
+        __typename
+      }
+    }
+    `;
+
+    makeReq(query);
+    setTodos((prev) => {
+      return prev.filter((e) => (e.done ? false : true));
+    });
+  };
+
+  /**
+   * Sort todos depending on order and parameter
+   * @param {Integer} order Iy may be: 0(descending) or 1(ascending).
+   * @param {String} parameter It may be: "deadline", "done" or "title".
+   */
+  const sortTodos = (order, parameter) => {
+    let mnoj = order ? -1 : 1;
+    let sortFunc;
+
+    sortFunc = (a, b) => {
+      let firstEl = a[parameter];
+      let secondEl = b[parameter];
+      if (typeof a === "String" &amp;&amp; typeof a === "String") {
+        firstEl = firstEl.toLowerCase();
+        secondEl = secondEl.toLowerCase();
+      }
+      if (firstEl > secondEl) return 1 * mnoj;
+      if (firstEl &lt; secondEl) return -1 * mnoj;
+      return 0;
+    };
+
+    if (parameter === "deadline") {
+      sortFunc = (a, b) => {
+        let firstEl = a[parameter];
+        let secondEl = b[parameter];
+        if (!order) {
+          firstEl = firstEl || Infinity;
+          secondEl = secondEl || Infinity;
+        }
+        if (firstEl > secondEl) return 1 * mnoj;
+        if (firstEl &lt; secondEl) return -1 * mnoj;
+        return 0;
+      };
+    }
+
+    todos.sort(sortFunc);
+  };
+
+  sortTodos(sort.order, sort.parameter);
 
   if (loading) return &lt;Loading />;
 
   return (
     &lt;div className="wrapper">
       &lt;div className="todo-list">
+        &lt;SortComponent
+          order={sort.order}
+          parameter={sort.parameter}
+          setSort={setSort}
+        />
         {error ||
           todos.map((e) => (
             &lt;TodoItem
               title={e.title}
               text={e.text}
               done={e.done}
+              deadline={e.deadline}
               key={e.id}
               id={e.id}
               setTodos={setTodos}
             />
           ))}
       &lt;/div>
-      &lt;Link to="/new" className="btn">
-        Добавить
-      &lt;/Link>
+      &lt;div className="todo-list__button-section ">
+        &lt;Button
+          onClick={handleGroupDelete}
+          className="todo-list__button-section__button todo-list__button-section__button_left"
+        >
+          &lt;FontAwesomeIcon icon={faTrash} />
+        &lt;/Button>
+        &lt;Link
+          to="/new"
+          className="todo-list__button-section__button todo-list__button-section__main-button"
+        >
+          Добавить
+        &lt;/Link>
+        &lt;Button
+          onClick={handleGroupUncheck}
+          className="todo-list__button-section__button todo-list__button-section__button_right"
+        >
+          &lt;FontAwesomeIcon icon={faCheckSquare} />
+        &lt;/Button>
+      &lt;/div>
     &lt;/div>
   );
 };
@@ -183,13 +338,13 @@ export default TodoList;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#TodoEditor">TodoEditor</a></li><li><a href="global.html#TodoItem">TodoItem</a></li><li><a href="global.html#TodoList">TodoList</a></li><li><a href="global.html#useReq">useReq</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#DataBlock">DataBlock</a></li><li><a href="global.html#DateInput">DateInput</a></li><li><a href="global.html#SortComponent">SortComponent</a></li><li><a href="global.html#TodoEditor">TodoEditor</a></li><li><a href="global.html#TodoItem">TodoItem</a></li><li><a href="global.html#TodoList">TodoList</a></li><li><a href="global.html#useReq">useReq</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun May 30 2021 17:01:34 GMT+0300 (Москва, стандартное время)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Thu Jun 24 2021 12:25:00 GMT+0300 (Moscow Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
