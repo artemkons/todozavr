@@ -9,7 +9,7 @@ import { useRoutes } from "./routes";
  * @returns basic routing.
  */
 const App = () => {
-  return <Router>{useRoutes(true)}</Router>;
+  return <Router>{useRoutes(false)}</Router>;
 };
 
 export default App;
