@@ -27,6 +27,7 @@ var schema = buildSchema(`
     todo(id: ID!): Todo
     allTodos: [Todo!]!
     getSort: Sort!
+    login(email: String!, password: String!) : User
   }
 
   type Mutation {

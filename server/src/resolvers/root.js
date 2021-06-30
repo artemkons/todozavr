@@ -51,6 +51,15 @@ var root = {
     const user = new User({ email, password });
     return await user.save();
   },
+  login: async ({ email, password }) => {
+    const candidate = await User.findOne({ email });
+
+    if (!candidate) return new Error("Пользователь не найден!");
+
+    if (candidate.password === password) return candidate;
+
+    return new Error("Неверный пароль пользователя!");
+  },
 };
 
 export default root;
