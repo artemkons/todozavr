@@ -6,6 +6,7 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
+import useReq from "../hooks/req.hook";
 
 /**
  * Render auth form.
@@ -13,10 +14,13 @@ import {
  */
 const AuthPage = () => {
   const [showPass, setShowPass] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
   const [authData, setAuthData] = useState({
     email: "",
     password: "",
   });
+  // TODO: Всё ли достал что надо?
+  const [makeQuery, , { error }] = useReq();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -26,9 +30,39 @@ const AuthPage = () => {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let query = `
+    query {
+      login(email: "${authData.email}", password: "${authData.password}") {
+        id
+      }
+    }
+    `;
+
+    if (isRegister)
+      query = `mutation {
+      registerUser(email: "${authData.email}", password: "${authData.password}") {
+        id
+      }
+    }`;
+
+    makeQuery(query);
+  };
+
   return (
     <div className="wrapper">
-      <form className="auth__form">
+      <div className="tabs is-medium is-centered">
+        <ul>
+          <li className={isRegister ? "" : "is-active"}>
+            <a onClick={() => setIsRegister(false)}>Вход</a>
+          </li>
+          <li className={isRegister ? "is-active" : ""}>
+            <a onClick={() => setIsRegister(true)}>Регистрация</a>
+          </li>
+        </ul>
+      </div>
+      <form onSubmit={handleSubmit} className="auth__form">
         <p className="control has-icons-left">
           <input
             onChange={handleChange}
@@ -64,7 +98,9 @@ const AuthPage = () => {
           />{" "}
           Показать пароль
         </p>
-        <button className="btn">Войти</button>
+        <button className="btn">
+          {isRegister ? "Зарегистрироваться" : "Войти"}
+        </button>
       </form>
     </div>
   );
