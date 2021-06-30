@@ -15,6 +15,14 @@ var schema = buildSchema(`
     parameter: String!
   }
 
+  type User {
+    id:ID!
+    email: String!
+    password: String!
+    sort: Sort!
+    todos: [Todo!]
+  }
+
   type Query {
     todo(id: ID!): Todo
     allTodos: [Todo!]!
@@ -29,6 +37,7 @@ var schema = buildSchema(`
     setSort(order: Int, parameter: String): Sort!
     unchekAllChecked: Query
     deleteAllChecked: Query
+    registerUser(email: String!, password: String!) : User
   }
 `);
 

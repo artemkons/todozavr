@@ -1,5 +1,6 @@
 import Todos from "../models/todo";
 import Sort from "../models/sort";
+import User from "../models/user";
 
 var root = {
   allTodos: async () => {
@@ -41,6 +42,14 @@ var root = {
   },
   deleteAllChecked: async () => {
     return await Todos.deleteMany({ done: true });
+  },
+  registerUser: async ({ email, password }) => {
+    const candidate = await User.findOne({ email });
+
+    if (candidate) return new Error("Пользователь уже существует!");
+
+    const user = new User({ email, password });
+    return await user.save();
   },
 };
 

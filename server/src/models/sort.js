@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const sortSchema = new Schema({
-  //   TODO: Подумать над дефолтами
-  // (чтобы результат запроса можно было сразу подставлять в функцию сортировки)
+export const sortSchema = new Schema({
   order: { type: Number, default: 0 },
   parameter: { type: String, default: "done" },
 });

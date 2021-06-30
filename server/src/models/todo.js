@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const todoSchema = new Schema({
+export const todoSchema = new Schema({
   title: String,
   text: String,
   done: { type: Boolean, default: false },
