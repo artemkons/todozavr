@@ -30,6 +30,7 @@ const useReq = () => {
       let result = await response.json();
       if (callback) callback(result);
       else setResponse(result);
+      setError(result.errors);
     } catch (error) {
       setError("Что-то пошло не так, попробуйте позже!");
     }

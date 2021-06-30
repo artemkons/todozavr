@@ -20,7 +20,7 @@ const AuthPage = () => {
     password: "",
   });
   // TODO: Всё ли достал что надо?
-  const [makeQuery, , { error }] = useReq();
+  const [makeQuery, , { loading, error }] = useReq();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -63,15 +63,22 @@ const AuthPage = () => {
         </ul>
       </div>
       <form onSubmit={handleSubmit} className="auth__form">
-        <p className="control has-icons-left">
-          <input
-            onChange={handleChange}
-            value={authData.email}
-            name="email"
-            className="input is-primary"
-            type="login"
-            placeholder="Email"
-          />
+        <p className={`control has-icons-left ${loading ? "is-loading" : ""}`}>
+          <label>
+            <input
+              onChange={handleChange}
+              value={authData.email}
+              name="email"
+              className={`input is-primary ${error ? "is-danger" : ""}`}
+              type="login"
+              placeholder="Email"
+            />
+            <span
+              className={`input__error-field_${error ? "active" : "disabled"}`}
+            >
+              {error ? error[0].message : "Что-то пошло не так!"}
+            </span>
+          </label>
           <span className="icon is-small is-left">
             <FontAwesomeIcon icon={faAt} />
           </span>
