@@ -5,12 +5,14 @@ import TodoEditor from "./components/TodoEditor";
 import AuthPage from "./components/AuthPage";
 
 /**
- * Returns routing depending on authentication.
+ * Returns routing depending on authentication. 
+ * Holds isAuthenticated state.
  * @param {boolean} isAuthenticated
  * @returns routing
  */
-export const useRoutes = (isAuthenticated) => {
+export const useRoutes = () => {
   const [todos, setTodos] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   if (isAuthenticated) {
     return (
@@ -28,7 +30,7 @@ export const useRoutes = (isAuthenticated) => {
   return (
     <Switch>
       <Route exact path="/">
-        <AuthPage />
+        <AuthPage setIsAuthenticated={setIsAuthenticated} />
       </Route>
     </Switch>
   );

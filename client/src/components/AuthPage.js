@@ -10,9 +10,13 @@ import useReq from "../hooks/req.hook";
 
 /**
  * Render auth form.
+ * Holds following states:
+ * showPass - hide/show password;
+ * isRegister - to determine is component uses for login or register.
+ * Sets isAuthenticated state.
  * @returns Auth form.
  */
-const AuthPage = () => {
+const AuthPage = ({ setIsAuthenticated }) => {
   const [showPass, setShowPass] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [authData, setAuthData] = useState({
@@ -47,7 +51,12 @@ const AuthPage = () => {
       }
     }`;
 
-    makeQuery(query);
+    let loginCallback = (response) => {
+      if (response.data.login || response.data.registerUser)
+        setIsAuthenticated(true);
+    };
+
+    makeQuery(query, loginCallback);
   };
 
   return (

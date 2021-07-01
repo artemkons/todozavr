@@ -8,7 +8,7 @@ import { useRoutes } from "./routes";
  * @returns basic routing.
  */
 const App = () => {
-  return <Router>{useRoutes(false)}</Router>;
+  return <Router>{useRoutes()}</Router>;
 };
 
 export default App;
