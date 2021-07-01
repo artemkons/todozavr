@@ -63,51 +63,59 @@ const AuthPage = () => {
         </ul>
       </div>
       <form onSubmit={handleSubmit} className="auth__form">
-        <p className={`control has-icons-left ${loading ? "is-loading" : ""}`}>
-          <label>
+        <div className="field">
+          <div
+            className={`control has-icons-left ${loading ? "is-loading" : ""}`}
+          >
+            <label>
+              <input
+                onChange={handleChange}
+                value={authData.email}
+                name="email"
+                className={`input is-primary ${error ? "is-danger" : ""}`}
+                type="login"
+                placeholder="Email"
+              />
+              <p className={`help is-danger ${error ? "" : "disabled"}`}>
+                {error ? error[0].message : "Что-то пошло не так!"}
+              </p>
+            </label>
+            <span className="icon is-small is-left">
+              <FontAwesomeIcon icon={faAt} />
+            </span>
+          </div>
+        </div>
+        <div className="field">
+          <div className="control has-icons-left has-icons-right">
             <input
               onChange={handleChange}
-              value={authData.email}
-              name="email"
-              className={`input is-primary ${error ? "is-danger" : ""}`}
-              type="login"
-              placeholder="Email"
+              value={authData.password}
+              name="password"
+              className="input is-primary"
+              type={showPass ? "text" : "password"}
+              placeholder="Password"
             />
-            <span
-              className={`input__error-field_${error ? "active" : "disabled"}`}
-            >
-              {error ? error[0].message : "Что-то пошло не так!"}
+            <span className="icon is-small is-left">
+              <FontAwesomeIcon icon={faKey} />
             </span>
-          </label>
-          <span className="icon is-small is-left">
-            <FontAwesomeIcon icon={faAt} />
-          </span>
-        </p>
-        <p className="control has-icons-left has-icons-right">
-          <input
-            onChange={handleChange}
-            value={authData.password}
-            name="password"
-            className="input is-primary"
-            type={showPass ? "text" : "password"}
-            placeholder="Password"
-          />
-          <span className="icon is-small is-left">
-            <FontAwesomeIcon icon={faKey} />
-          </span>
-          <span className="icon is-small is-right">
-            <FontAwesomeIcon icon={showPass ? faEye : faEyeSlash} />
-          </span>
-          <input
-            onChange={(e) => setShowPass(e.target.checked)}
-            checked={showPass}
-            type="checkbox"
-          />{" "}
-          Показать пароль
-        </p>
-        <button className="btn">
-          {isRegister ? "Зарегистрироваться" : "Войти"}
-        </button>
+            <span className="icon is-small is-right">
+              <FontAwesomeIcon icon={showPass ? faEye : faEyeSlash} />
+            </span>
+            <div className="field">
+              <input
+                onChange={(e) => setShowPass(e.target.checked)}
+                checked={showPass}
+                type="checkbox"
+              />{" "}
+              Показать пароль
+            </div>
+          </div>
+        </div>
+        <div className="field">
+          <button className="btn">
+            {isRegister ? "Зарегистрироваться" : "Войти"}
+          </button>
+        </div>
       </form>
     </div>
   );

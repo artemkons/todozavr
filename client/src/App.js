@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import "bulma/bulma.sass";
 import "./styles/index.sass";
 import { useRoutes } from "./routes";
 

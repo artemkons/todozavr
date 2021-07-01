@@ -1,3 +1,7 @@
+@import "./variables"
+@import "../../../node_modules/bulma/bulma"
+
+// ----
 $main-color: #0075ff
 $main-gradient: linear-gradient(to right, #0acffe 0%, #495aff 100%)
 $btn-delete-color: #cc0f35
@@ -193,8 +197,7 @@ label>h1
 .btn
     display: block
     height: 35px
-    width: 30%
-    max-width: 200px
+    max-width: 250px
     margin: 0 auto
     padding: .3em
     border: none
@@ -211,12 +214,6 @@ label>h1
         cursor: pointer
         box-shadow: 0 0 20px 0px #495affd1
         color: white
-
-    @media ( max-width: $mobile-L )
-        width: 80%
-        padding: 5px
-    @media ( min-width: 768px )
-        width: 60%
 
 .checkbox
     grid-column: 1/2
@@ -310,10 +307,23 @@ label>h1
     align-items: center
 
     &>*
-        margin-bottom: 0.5em
+        margin-bottom: 1rem
 
 .input__error-field
     &_active
         color: #f14668
     &_disabled
         color: transparent
+
+p.help.disabled
+    color: transparent
+
+.field
+    @media ( min-width: 320px )
+        width: 100%
+
+    @media ( min-width: 768px )
+        width: 60%
+
+    @media ( min-width:  1024px)
+        width: 40%
