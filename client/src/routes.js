@@ -6,13 +6,12 @@ import AuthPage from "./components/AuthPage";
 
 /**
  * Returns routing depending on authentication.
- * Holds isAuthenticated state.
  * @param {boolean} isAuthenticated
  * @returns routing
  */
-export const useRoutes = () => {
+export const useRoutes = (isAuthenticated) => {
+  //TODO: Мб не стоит сюда?
   const [todos, setTodos] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   if (isAuthenticated) {
     return (
@@ -30,7 +29,7 @@ export const useRoutes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <AuthPage setIsAuthenticated={setIsAuthenticated} />
+        <AuthPage />
       </Route>
     </Switch>
   );

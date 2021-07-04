@@ -10,6 +10,7 @@ import useReq from "../hooks/req.hook";
 import { AuthContext } from "../context/AuthContext";
 
 /**
+ * FIXME:
  * Render auth form.
  * Holds following states:
  * showPass - hide/show password;
@@ -17,9 +18,9 @@ import { AuthContext } from "../context/AuthContext";
  * Sets isAuthenticated state.
  * @returns Auth form.
  */
-const AuthPage = ({ setIsAuthenticated }) => {
+const AuthPage = () => {
   // TODO: User id нужен?
-  const { userId, setUserId } = useContext(AuthContext);
+  const { userId, setUserId, setIsAuthenticated } = useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [authData, setAuthData] = useState({

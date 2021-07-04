@@ -10,10 +10,13 @@ import { AuthContext } from "./context/AuthContext";
  */
 const App = () => {
   const [userId, setUserId] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-    <AuthContext.Provider value={{ userId, setUserId }}>
-      <Router>{useRoutes()}</Router>;
+    <AuthContext.Provider
+      value={{ userId, setUserId, isAuthenticated, setIsAuthenticated }}
+    >
+      <Router>{useRoutes(isAuthenticated)}</Router>;
     </AuthContext.Provider>
   );
 };
