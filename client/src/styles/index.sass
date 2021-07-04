@@ -6,7 +6,9 @@ $main-color: #0075ff
 $main-gradient: linear-gradient(to right, #0acffe 0%, #495aff 100%)
 $btn-delete-color: #cc0f35
 
+$mobile: 320px
 $mobile-L: 426px
+$laptop: 1025px
 
 @font-face
     font-family: "Montserrat"
@@ -39,6 +41,20 @@ a
 label>h1
     display: inline
     margin-right: 0.5em
+
+.navbar-menu.mobile
+    @media ( min-width: $mobile )
+        display: flex
+        justify-content: space-between
+        align-items: center
+        background-color: #3273dc
+        box-shadow: none
+
+.is-laptop
+    display: none
+
+    @media ( min-width: $laptop )
+        display: block
 
 .wrapper
     box-sizing: border-box
@@ -327,3 +343,18 @@ p.help.disabled
 
     @media ( min-width:  1024px)
         width: 40%
+
+.button.is-accent
+    background-color: #FFB026
+    color: black
+
+    &:hover
+        background-color: darken( #FFB026, 5% )
+        color: black
+
+.icon
+    @media ( min-width: $mobile )
+        margin: 0 auto !important
+
+.navbar-item
+    color: white

@@ -12,6 +12,7 @@ import CloseSvg from "../../styles/close-button.svg";
 import useReq from "../../hooks/req.hook";
 import { differenceInCalendarDays } from "date-fns";
 import { Button } from "react-bulma-components";
+import Navbar from "./Navbar";
 
 /**
  * Displays date and time. If deadline's year equals to current year, year isnt displayed.
@@ -257,47 +258,50 @@ const TodoList = ({ todos, setTodos }) => {
   if (loading) return <Loading />;
 
   return (
-    <div className="wrapper">
-      <div className="todo-list">
-        <SortComponent
-          order={sort.order}
-          parameter={sort.parameter}
-          setSort={setSort}
-        />
-        {error ||
-          todos.map((e) => (
-            <TodoItem
-              title={e.title}
-              text={e.text}
-              done={e.done}
-              deadline={e.deadline}
-              key={e.id}
-              id={e.id}
-              setTodos={setTodos}
-            />
-          ))}
+    <>
+      <Navbar />
+      <div className="wrapper">
+        <div className="todo-list">
+          <SortComponent
+            order={sort.order}
+            parameter={sort.parameter}
+            setSort={setSort}
+          />
+          {error ||
+            todos.map((e) => (
+              <TodoItem
+                title={e.title}
+                text={e.text}
+                done={e.done}
+                deadline={e.deadline}
+                key={e.id}
+                id={e.id}
+                setTodos={setTodos}
+              />
+            ))}
+        </div>
+        <div className="todo-list__button-section ">
+          <Button
+            onClick={handleGroupDelete}
+            className="todo-list__button-section__button todo-list__button-section__button_left"
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+          <Link
+            to="/new"
+            className="todo-list__button-section__button todo-list__button-section__main-button"
+          >
+            Добавить
+          </Link>
+          <Button
+            onClick={handleGroupUncheck}
+            className="todo-list__button-section__button todo-list__button-section__button_right"
+          >
+            <FontAwesomeIcon icon={faCheckSquare} />
+          </Button>
+        </div>
       </div>
-      <div className="todo-list__button-section ">
-        <Button
-          onClick={handleGroupDelete}
-          className="todo-list__button-section__button todo-list__button-section__button_left"
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </Button>
-        <Link
-          to="/new"
-          className="todo-list__button-section__button todo-list__button-section__main-button"
-        >
-          Добавить
-        </Link>
-        <Button
-          onClick={handleGroupUncheck}
-          className="todo-list__button-section__button todo-list__button-section__button_right"
-        >
-          <FontAwesomeIcon icon={faCheckSquare} />
-        </Button>
-      </div>
-    </div>
+    </>
   );
 };
 
