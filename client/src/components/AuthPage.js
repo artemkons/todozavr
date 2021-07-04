@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAt,
@@ -7,6 +7,7 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import useReq from "../hooks/req.hook";
+import { AuthContext } from "../context/AuthContext";
 
 /**
  * Render auth form.
@@ -17,6 +18,8 @@ import useReq from "../hooks/req.hook";
  * @returns Auth form.
  */
 const AuthPage = ({ setIsAuthenticated }) => {
+  // TODO: User id нужен?
+  const { userId, setUserId } = useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [authData, setAuthData] = useState({
@@ -34,6 +37,7 @@ const AuthPage = ({ setIsAuthenticated }) => {
     }));
   };
 
+  // TODO: Стоит переписать отдельно под регистрацию и под логин
   const handleSubmit = (e) => {
     e.preventDefault();
     let query = `
@@ -52,8 +56,9 @@ const AuthPage = ({ setIsAuthenticated }) => {
     }`;
 
     let loginCallback = (response) => {
-      if (response.data.login || response.data.registerUser)
-        setIsAuthenticated(true);
+      let data = response.data;
+      if (data.login || data.registerUser) setIsAuthenticated(true);
+      setUserId(data.login ? data.login.id : data.registerUser.id);
     };
 
     makeQuery(query, loginCallback);
