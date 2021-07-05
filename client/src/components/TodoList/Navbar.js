@@ -1,10 +1,19 @@
 import React, { useContext } from "react";
+import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const { setIsAuthenticated } = useContext(AuthContext);
+  const [, , removeCookie] = useCookies(["userId"]);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    removeCookie("userId", {
+      path: "/",
+    });
+  };
 
   return (
     <nav className="navbar is-primary">
@@ -16,7 +25,7 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <button
-                onClick={() => setIsAuthenticated(false)}
+                onClick={handleLogout}
                 className="button is-primary is-rounded is-accent"
               >
                 <span className="icon">

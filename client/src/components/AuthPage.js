@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAt,
@@ -10,24 +11,23 @@ import useReq from "../hooks/req.hook";
 import { AuthContext } from "../context/AuthContext";
 
 /**
- * FIXME:
  * Render auth form.
  * Holds following states:
  * showPass - hide/show password;
- * isRegister - to determine is component uses for login or register.
- * Sets isAuthenticated state.
+ * isRegister - to determine is component uses for login or register;
+ * authData - form's state.
+ * Sets userId cookie, when user log in or register.
  * @returns Auth form.
  */
 const AuthPage = () => {
-  // TODO: User id нужен?
-  const { userId, setUserId, setIsAuthenticated } = useContext(AuthContext);
+  const [, setCookie] = useCookies(["userId"]);
+  const { setUserId, setIsAuthenticated } = useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [authData, setAuthData] = useState({
     email: "",
     password: "",
   });
-  // TODO: Всё ли достал что надо?
   const [makeQuery, , { loading, error }] = useReq();
 
   const handleChange = (e) => {
@@ -38,31 +38,52 @@ const AuthPage = () => {
     }));
   };
 
-  // TODO: Стоит переписать отдельно под регистрацию и под логин
+  // TODO: Подумать, как сделать лучше
   const handleSubmit = (e) => {
     e.preventDefault();
-    let query = `
-    query {
-      login(email: "${authData.email}", password: "${authData.password}") {
-        id
-      }
-    }
-    `;
+    let query;
+    let callback;
 
-    if (isRegister)
+    let register = () => {
       query = `mutation {
-      registerUser(email: "${authData.email}", password: "${authData.password}") {
+        registerUser(email: "${authData.email}", password: "${authData.password}") {
+          id
+        }
+      }`;
+
+      callback = (res) => {
+        let data = res.data.registerUser;
+        if (data) {
+          setIsAuthenticated(true);
+          setUserId(data.id);
+          setCookie("userId", data.id, { path: "/" });
+        }
+      };
+
+      makeQuery(query, callback);
+    };
+
+    let login = () => {
+      query = `query {
+      login(email: "${authData.email}", password: "${authData.password}") {
         id
       }
     }`;
 
-    let loginCallback = (response) => {
-      let data = response.data;
-      if (data.login || data.registerUser) setIsAuthenticated(true);
-      setUserId(data.login ? data.login.id : data.registerUser.id);
+      callback = (res) => {
+        let data = res.data.login;
+        if (data) {
+          setIsAuthenticated(true);
+          setUserId(data.id);
+          setCookie("userId", data.id, { path: "/" });
+        }
+      };
+
+      makeQuery(query, callback);
     };
 
-    makeQuery(query, loginCallback);
+    if (isRegister) register();
+    else login();
   };
 
   return (
