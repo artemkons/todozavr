@@ -24,20 +24,20 @@ var schema = buildSchema(`
   }
 
   type Query {
-    todo(id: ID!): Todo
-    allTodos: [Todo!]!
-    getSort: Sort!
+    todo(userId: ID!, todoId: ID!): Todo
+    allTodos(userId: ID!): [Todo]
+    getSort(userId: ID!): Sort!
     login(email: String!, password: String!) : User
   }
 
   type Mutation {
-    addTodo(title: String!, text: String, deadline: String): Todo!
-    deleteTodo(id: ID!): Todo
-    editTodo(id: ID!, title: String!, text: String!, deadline: String): Todo!
-    doneTodo(id: ID!): Todo! 
-    setSort(order: Int, parameter: String): Sort!
-    unchekAllChecked: Query
-    deleteAllChecked: Query
+    addTodo(userId: ID!, title: String!, text: String, deadline: String): Todo!
+    deleteTodo(userId: ID!, todoId: ID!): Todo
+    editTodo(userId: ID!, todoId: ID!, title: String!, text: String!, deadline: String): Todo!
+    doneTodo(userId: ID!, todoId: ID!): Todo! 
+    setSort(userId: ID!, order: Int, parameter: String): Sort!
+    unchekAllChecked(userId: ID!): Query
+    deleteAllChecked(userId: ID!): Query
     registerUser(email: String!, password: String!) : User
   }
 `);

@@ -3,45 +3,80 @@ import Sort from "../models/sort";
 import User from "../models/user";
 
 var root = {
-  allTodos: async () => {
-    return await Todos.find({});
+  allTodos: async ({ userId }) => {
+    const user = await User.findById(userId);
+    return user.todos || [];
   },
-  todo: async ({ id }) => {
-    return await Todos.findById(id);
+  todo: async ({ userId, todoId }) => {
+    const user = await User.findById(userId);
+    let todo = user.todos.id(todoId);
+    return await todo;
   },
-  addTodo: async ({ title, text, deadline }) => {
-    const todo = new Todos({ title, text: text ? text : "", deadline });
-    return await todo.save();
+  addTodo: async ({ userId, title, text, deadline }) => {
+    const user = await User.findById(userId);
+    let newTodo = new Todos({ title, text: text ? text : "", deadline });
+    user.todos.push(newTodo);
+    await user.save();
+    return newTodo;
   },
-  deleteTodo: async ({ id }) => {
-    return await Todos.findByIdAndDelete(id);
+  deleteTodo: async ({ userId, todoId }) => {
+    const user = await User.findById(userId);
+    let deletedTodo = user.todos.id(todoId);
+    deletedTodo.remove();
+    await user.save();
+    return deletedTodo;
   },
-  editTodo: async ({ id, title, text, deadline }) => {
-    return await Todos.findByIdAndUpdate(
-      id,
-      { title, text, deadline },
-      { new: true }
-    );
+  editTodo: async ({ userId, todoId, title, text, deadline }) => {
+    const user = await User.findById(userId);
+    let todoForEdit = user.todos.id(todoId);
+    todoForEdit.set({
+      ...todoForEdit,
+      title,
+      text,
+      deadline,
+    });
+    await user.save();
+    return todoForEdit;
   },
-  doneTodo: async ({ id }) => {
-    let todo = await Todos.findById(id);
-    todo.done = !todo.done;
-    return await todo.save();
+  doneTodo: async ({ userId, todoId }) => {
+    const user = await User.findById(userId);
+    let todoForDone = user.todos.id(todoId);
+    todoForDone.set({
+      done: !todoForDone.done,
+    });
+    await user.save();
+    return todoForDone;
   },
-  getSort: async () => {
-    return await Sort.findOne();
+  getSort: async ({ userId }) => {
+    const user = await User.findById(userId);
+    return user.sort;
   },
-  setSort: async ({ order, parameter }) => {
-    let sort = await Sort.findOne();
-    sort.order = order != null ? order : sort.order;
-    sort.parameter = parameter || sort.parameter;
-    return await sort.save();
+  setSort: async ({ userId, order, parameter }) => {
+    const user = await User.findById(userId);
+    let sort = user.sort;
+    sort.set({
+      ...(order && { order }),
+      ...(parameter && { parameter }),
+    });
+    user.save();
+    return sort;
   },
-  unchekAllChecked: async () => {
-    return await Todos.updateMany({ done: true }, { done: false });
+  unchekAllChecked: async ({ userId }) => {
+    const user = await User.findById(userId);
+    const newTodos = user.todos.map((todo) => {
+      if (todo.done) todo.done = false;
+      return todo;
+    });
+    user.todos = newTodos;
+    await user.save();
+    return newTodos;
   },
-  deleteAllChecked: async () => {
-    return await Todos.deleteMany({ done: true });
+  deleteAllChecked: async ({ userId }) => {
+    const user = await User.findById(userId);
+    const newTodos = user.todos.filter((todo) => !todo.done);
+    user.todos = newTodos;
+    await user.save();
+    return newTodos;
   },
   registerUser: async ({ email, password }) => {
     const candidate = await User.findOne({ email });

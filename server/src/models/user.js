@@ -13,7 +13,7 @@ const userSchema = new Schema({
       parameter: "done",
     },
   },
-  todos: [todoSchema],
+  todos: { type: [todoSchema], default: [] },
 });
 
 export default mongoose.model("User", userSchema);
