@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,6 +6,7 @@ import {
   faTrash,
   faCheckSquare,
 } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "../../context/AuthContext";
 import Loading from "../Loading";
 import SortComponent from "./SortComponent";
 import CloseSvg from "../../styles/close-button.svg";
@@ -65,12 +66,13 @@ const DataBlock = ({ deadline }) => {
  * @returns Todo item.
  */
 const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
+  const { userId } = useContext(AuthContext);
   const [makeMutation, , { loading }] = useReq();
 
-  const handleDelete = async (e) => {
+  const handleDelete = (e) => {
     let mutation = `
     mutation {
-      deleteTodo(id:"${id}") {
+      deleteTodo(userId:"${userId}", todoId:"${id}") {
         id
       }
     }
@@ -80,10 +82,10 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
     setTodos((prev) => prev.filter((el) => el.id != id));
   };
 
-  const handleCheckbox = async (e) => {
+  const handleCheckbox = (e) => {
     let mutation = `
     mutation {
-      doneTodo(id:"${id}") {
+      doneTodo(userId:"${userId}", todoId:"${id}") {
         title
       }
     }
@@ -133,13 +135,15 @@ const TodoItem = ({ title, text, done, deadline, id, setTodos }) => {
 };
 
 /**
- * Creates a todo list. Makes following queries: query - allTodos and
- * getSorting during the mounting and unmounting, mutation - unchekAllChecked, deleteAllChecked.
+ * Creates a todo list. Makes following queries:
+ * query - allTodos and getSorting during the mounting and unmounting;
+ * mutation - unchekAllChecked, deleteAllChecked.
  * @param {array} todos Todos list.
  * @param {function} setTodos Todos state setter.
  * @returns Todo list.
  */
 const TodoList = ({ todos, setTodos }) => {
+  const { userId } = useContext(AuthContext);
   const [sort, setSort] = useState({
     order: 0,
     parameter: "done",
@@ -150,7 +154,7 @@ const TodoList = ({ todos, setTodos }) => {
   useEffect(() => {
     let query = `
     query {
-      allTodos {
+      allTodos(userId:"${userId}"){
         id
         title
         text
@@ -164,12 +168,12 @@ const TodoList = ({ todos, setTodos }) => {
       setTodos(result.data.allTodos);
     };
     makeReq(query, setFetchedTodos);
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     let query = `
     query {
-      getSort {
+      getSort(userId:"${userId}") {
         order
         parameter
       }
@@ -180,12 +184,12 @@ const TodoList = ({ todos, setTodos }) => {
       setSort(result.data.getSort);
     };
     makeReq(query, setSortReq);
-  }, []);
+  }, [userId]);
 
   const handleGroupUncheck = () => {
     let query = `
     mutation {
-      unchekAllChecked {
+      unchekAllChecked(userId:"${userId}") {
         __typename
       }
     }
@@ -203,7 +207,7 @@ const TodoList = ({ todos, setTodos }) => {
   const handleGroupDelete = () => {
     let query = `
     mutation {
-      deleteAllChecked {
+      deleteAllChecked(userId:"${userId}") {
         __typename
       }
     }

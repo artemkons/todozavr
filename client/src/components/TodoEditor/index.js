@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import Loading from "../Loading";
 import DateInput from "./DateInput";
 import useReq from "../../hooks/req.hook";
@@ -14,6 +15,7 @@ import { Button } from "react-bulma-components";
  * @returns Todo editor window.
  */
 const TodoEditor = ({ todos }) => {
+  const { userId } = useContext(AuthContext);
   let { id } = useParams();
 
   /**
@@ -87,7 +89,7 @@ const TodoEditor = ({ todos }) => {
 
     let newTodoQuery = `
     mutation {
-      addTodo(title:"${value.title.trim()}", text:"${
+      addTodo(userId: "${userId}", title:"${value.title.trim()}", text:"${
       value.text
     }", deadline:${deadline_str}) {
         id
@@ -97,7 +99,7 @@ const TodoEditor = ({ todos }) => {
 
     let editTodoQuery = `
     mutation {
-      editTodo(id:"${id}", title:"${value.title.trim()}", text:"${
+      editTodo(userId: "${userId}", todoId:"${id}", title:"${value.title.trim()}", text:"${
       value.text
     }", deadline:${deadline_str}) {
         id

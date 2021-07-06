@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import useReq from "../../hooks/req.hook";
 import { Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +6,7 @@ import {
   faSortAmountUp,
   faSortAmountDownAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "../../context/AuthContext";
 
 /**
  * Render sort menu, which consist of text and two buttons: order, parameter.
@@ -16,6 +17,7 @@ import {
  * @returns Sort menu.
  */
 const SortComponent = ({ order, parameter, setSort }) => {
+  const { userId } = useContext(AuthContext);
   const [makeMutation, ,] = useReq();
 
   const handleSelect = (e) => {
@@ -23,7 +25,7 @@ const SortComponent = ({ order, parameter, setSort }) => {
 
     let mutation = `
     mutation {
-      setSort(parameter: "${newPar}") {
+      setSort(userId:"${userId}", parameter: "${newPar}") {
         __typename
       }
     }
@@ -41,7 +43,7 @@ const SortComponent = ({ order, parameter, setSort }) => {
 
     let mutation = `
     mutation {
-      setSort(order:${newOrder}) {
+      setSort(userId:"${userId}", order:${newOrder}) {
         __typename
       }
     }
