@@ -257,7 +257,28 @@ const TodoList = ({ todos, setTodos }) => {
     todos.sort(sortFunc);
   };
 
-  sortTodos(sort.order, sort.parameter);
+  if (todos) sortTodos(sort.order, sort.parameter);
+
+  /**
+   * Renders error or empty message. If everything ok renders todos.
+   * @returns {String|Array} message or array of TodoItem s
+   */
+  const showTodos = () => {
+    if (error) return error;
+    if (!todos.length) return "Пока ничего нет...";
+    else
+      return todos.map((e) => (
+        <TodoItem
+          title={e.title}
+          text={e.text}
+          done={e.done}
+          deadline={e.deadline}
+          key={e.id}
+          id={e.id}
+          setTodos={setTodos}
+        />
+      ));
+  };
 
   if (loading) return <Loading />;
 
@@ -271,18 +292,7 @@ const TodoList = ({ todos, setTodos }) => {
             parameter={sort.parameter}
             setSort={setSort}
           />
-          {error ||
-            todos.map((e) => (
-              <TodoItem
-                title={e.title}
-                text={e.text}
-                done={e.done}
-                deadline={e.deadline}
-                key={e.id}
-                id={e.id}
-                setTodos={setTodos}
-              />
-            ))}
+          {showTodos()}
         </div>
         <div className="todo-list__button-section ">
           <Button

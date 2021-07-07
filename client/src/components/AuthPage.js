@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,6 +31,13 @@ const AuthPage = () => {
   });
   const [makeQuery, , { loading, error, setError }] = useReq();
 
+  useEffect(() => {
+    clearTimeout(timerId);
+    let timerId = setTimeout(() => {
+      setError(null);
+    }, 5000);
+  }, [error]);
+
   const handleChange = (e) => {
     let { name, value } = e.target;
     setAuthData((prev) => ({
@@ -46,7 +53,7 @@ const AuthPage = () => {
     let callback;
 
     if (!authData.email || !authData.password) {
-      setError("Заполните поля!");
+      setError("Заполните все поля!");
       return;
     }
 
@@ -61,9 +68,9 @@ const AuthPage = () => {
       callback = (res) => {
         let data = res.data.registerUser;
         if (data) {
-          setIsAuthenticated(true);
           setUserId(data.id);
           setUserIdCookie("userId", data.id, { path: "/" });
+          setIsAuthenticated(true);
         }
       };
 
@@ -82,9 +89,9 @@ const AuthPage = () => {
       callback = (res) => {
         let data = res.data.login;
         if (data) {
-          setIsAuthenticated(true);
           setUserId(data.id);
           setUserIdCookie("userId", data.id, { path: "/" });
+          setIsAuthenticated(true);
         }
       };
 
@@ -147,12 +154,14 @@ const AuthPage = () => {
               <FontAwesomeIcon icon={showPass ? faEye : faEyeSlash} />
             </span>
             <div className="field">
-              <input
-                onChange={(e) => setShowPass(e.target.checked)}
-                checked={showPass}
-                type="checkbox"
-              />{" "}
-              Показать пароль
+              <label>
+                <input
+                  onChange={(e) => setShowPass(e.target.checked)}
+                  checked={showPass}
+                  type="checkbox"
+                />{" "}
+                Показать пароль
+              </label>
             </div>
           </div>
         </div>
