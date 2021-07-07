@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import useReq from "../hooks/req.hook";
 import { AuthContext } from "../context/AuthContext";
+import { createHash } from "../utils/password";
 
 /**
  * Render auth form.
@@ -20,7 +21,7 @@ import { AuthContext } from "../context/AuthContext";
  * @returns Auth form.
  */
 const AuthPage = () => {
-  const [, setCookie] = useCookies(["userId"]);
+  const [, setUserIdCookie] = useCookies(["userId"]);
   const { setUserId, setIsAuthenticated } = useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
@@ -28,7 +29,7 @@ const AuthPage = () => {
     email: "",
     password: "",
   });
-  const [makeQuery, , { loading, error }] = useReq();
+  const [makeQuery, , { loading, error, setError }] = useReq();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -44,9 +45,15 @@ const AuthPage = () => {
     let query;
     let callback;
 
+    if (!authData.email || !authData.password) {
+      setError("Заполните поля!");
+      return;
+    }
+
     let register = () => {
+      let newHash = createHash(authData.password);
       query = `mutation {
-        registerUser(email: "${authData.email}", password: "${authData.password}") {
+        registerUser(email: "${authData.email}", password: "${newHash}") {
           id
         }
       }`;
@@ -56,7 +63,7 @@ const AuthPage = () => {
         if (data) {
           setIsAuthenticated(true);
           setUserId(data.id);
-          setCookie("userId", data.id, { path: "/" });
+          setUserIdCookie("userId", data.id, { path: "/" });
         }
       };
 
@@ -65,7 +72,9 @@ const AuthPage = () => {
 
     let login = () => {
       query = `query {
-      login(email: "${authData.email}", password: "${authData.password}") {
+      login(email: "${authData.email}", password: "${createHash(
+        authData.password
+      )}") {
         id
       }
     }`;
@@ -75,7 +84,7 @@ const AuthPage = () => {
         if (data) {
           setIsAuthenticated(true);
           setUserId(data.id);
-          setCookie("userId", data.id, { path: "/" });
+          setUserIdCookie("userId", data.id, { path: "/" });
         }
       };
 
@@ -113,7 +122,7 @@ const AuthPage = () => {
                 placeholder="Email"
               />
               <p className={`help is-danger ${error ? "" : "disabled"}`}>
-                {error ? error[0].message : "Что-то пошло не так!"}
+                {error ? error[0].message ?? error : "Что-то пошло не так!"}
               </p>
             </label>
             <span className="icon is-small is-left">

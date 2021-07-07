@@ -1,5 +1,4 @@
 import Todos from "../models/todo";
-import Sort from "../models/sort";
 import User from "../models/user";
 
 var root = {
