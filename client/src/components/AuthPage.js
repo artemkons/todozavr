@@ -46,19 +46,27 @@ const AuthPage = () => {
     }));
   };
 
-  // TODO: Подумать, как сделать лучше
   const handleSubmit = (e) => {
     e.preventDefault();
-    let query;
-    let callback;
 
     if (!authData.email || !authData.password) {
       setError("Заполните все поля!");
       return;
     }
 
+    let query;
+    let callback;
+    let newHash = createHash(authData.password);
+
+    let setAuthData = (data) => {
+      if (data) {
+        setUserId(data.id);
+        setUserIdCookie("userId", data.id, { path: "/" });
+        setIsAuthenticated(true);
+      }
+    };
+
     let register = () => {
-      let newHash = createHash(authData.password);
       query = `mutation {
         registerUser(email: "${authData.email}", password: "${newHash}") {
           id
@@ -67,11 +75,7 @@ const AuthPage = () => {
 
       callback = (res) => {
         let data = res.data.registerUser;
-        if (data) {
-          setUserId(data.id);
-          setUserIdCookie("userId", data.id, { path: "/" });
-          setIsAuthenticated(true);
-        }
+        setAuthData(data);
       };
 
       makeQuery(query, callback);
@@ -79,20 +83,14 @@ const AuthPage = () => {
 
     let login = () => {
       query = `query {
-      login(email: "${authData.email}", password: "${createHash(
-        authData.password
-      )}") {
+      login(email: "${authData.email}", password: "${newHash}") {
         id
       }
     }`;
 
       callback = (res) => {
         let data = res.data.login;
-        if (data) {
-          setUserId(data.id);
-          setUserIdCookie("userId", data.id, { path: "/" });
-          setIsAuthenticated(true);
-        }
+        setAuthData(data);
       };
 
       makeQuery(query, callback);

@@ -10,7 +10,6 @@ import AuthPage from "./components/AuthPage";
  * @returns routing
  */
 export const useRoutes = (isAuthenticated) => {
-  //TODO: Мб не стоит сюда?
   const [todos, setTodos] = useState([]);
 
   if (isAuthenticated) {
